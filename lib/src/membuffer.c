@@ -50,7 +50,7 @@ static uint8_t hex2byte(const char *c, int *error)
 {
 	*error = -1;
 
-	if (!isxdigit(c[0]) || !isxdigit(c[1]))
+	if (!isxdigit((int) c[0]) || !isxdigit((int) c[1]))
 		return 0;
 
 	char s[] = { c[0], c[1], '\0' };

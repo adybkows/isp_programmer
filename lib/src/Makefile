@@ -1,7 +1,7 @@
 #for debugging
-CFLAGS = -std=c99 -O0 -g
+CFLAGS = -O0 -g -Wall --pedantic -std=c99
 
-#CFLAGS = -std=c99 -O3
+#CFLAGS = -O3 -Wall --pedantic -std=c99
 CPPFLAGS = -I. -I../include
 LDFLAGS = -g
 
