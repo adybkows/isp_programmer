@@ -7,7 +7,7 @@ LDFLAGS = -g
 
 OUT = bin/ispprog.a
 
-SRC = globals.c processors.c #membuffer.c
+SRC = globals.c membuffer.c processors.c
 
 ####################
 
