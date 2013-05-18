@@ -7,7 +7,7 @@ typedef char TLockBits[8][6];
 
 typedef struct {
   uint8_t b0, b1, b2;      // Signature bytes
-  char name[17];
+  const char *name;        // Chip name
   uint8_t proctype;        // Processor type: PROC_TYPE_xxx
   long fsize;              // Flash size in bytes
   long esize;              // EEPROM size in bytes
@@ -22,10 +22,10 @@ typedef struct {
   uint8_t algo_lb;         // Lock bits and fuses reading/programming algorithm
   uint8_t algo_busy;       // Busy check algorithm
   long prog_time;          // Time in ms to wait after programming
-  char lockbits[8][6];     // LSB to MSB
-  char fusebitslo[8][17];  // LSB to MSB
-  char fusebitshi[8][17];  // LSB to MSB
-  char fusebitsext[8][17]; // LSB to MSB
+  const char *lockbits[8];    // LSB to MSB
+  const char *fusebitslo[8];  // LSB to MSB
+  const char *fusebitshi[8];  // LSB to MSB
+  const char *fusebitsext[8]; // LSB to MSB
 } TSignature;
 
 #define ALGO_STD         1

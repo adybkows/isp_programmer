@@ -2,11 +2,17 @@
 #include <stdint.h>
 
 #include <windows.h>
-#include <cfgmgr32.h>
 #include <setupapi.h>
+
+#ifdef __MINGW32__
+  #include <ddk/cfgmgr32.h>
+#else
+  #include <cfgmgr32.h>
+#endif
 
 #include "enumlpt.h"
 
+// GUID_DEVINTERFACE_SERENUM_BUS_ENUMERATOR
 static const GUID lptcom = { 0x4D36E978, 0xE325, 0x11CE, { 0xbf, 0xc1, 0x08, 0x00, 0x2b, 0xe1, 0x03, 0x18 } };
 
 static bool GetLPTAddr(DEVINST dev, uint16_t *baseaddr)

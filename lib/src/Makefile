@@ -1,13 +1,12 @@
 CC = gcc
 
 #for debugging
-CFLAGS = -O0 -g -Wall --pedantic -std=c99
-
-#CFLAGS = -O3 -Wall --pedantic -std=c99
+CFLAGS = -O0 -g -Wall -Werror --pedantic -std=c99
+#CFLAGS = -O3 -Wall -Werror --pedantic -std=c99
 CPPFLAGS = -I. -I../include
 LDFLAGS = -g
 
-OUT = bin/ispprog.a
+OUT = ../libispprog.a
 
 SRC = globals.c membuffer.c pinsio.c processors.c spi.c
 

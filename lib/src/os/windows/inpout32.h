@@ -2,6 +2,7 @@
 #define INPOUT32_H
 
 #include <stdbool.h>
+#include <stdint.h>
 
 // Driver initialization
 bool InpOut32Init(void);
