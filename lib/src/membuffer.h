@@ -24,5 +24,10 @@ const char *LoadIntelHex(int bufid, const char *fname, uint32_t buflen, uint32_t
 const char *SaveIntelHex(int bufid, const char *fname, uint32_t buflen);
 const char *LoadBinaryFile(int bufid, const char *fname, uint32_t buflen, uint32_t *minaddr, uint32_t *maxaddr);
 const char *SaveBinaryFile(int bufid, const char *fname, uint32_t buflen);
+int HighestUsed(int bufid, uint32_t buflen);
+int LowestUsed(int bufid, uint32_t buflen);
+bool IsBlockEmpty(int bufid, uint32_t startadr, uint32_t len);
+bool IsIntelHex(const char *fname, int bufid);
+bool IsIntelHexFilename(const char *fname);
 
 #endif /*MEMBUFFER_H*/

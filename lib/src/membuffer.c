@@ -273,162 +273,118 @@ const char *LoadBinaryFile(int bufid, const char *fname, uint32_t buflen, uint32
 	return "";
 }
 
-#if 0
-
-function SaveBinaryFile(uint8_t bufid; fname:string; buflen:int):string;
-var
-  f:file;
-const
-  numwr:int == 0;
+const char *SaveBinaryFile(int bufid, const char *fname, uint32_t buflen)
 {
-  if buflen == 0 {
-  {
-    Result = 'Can''t save file';
-    Exit;
-  }
-  AssignFile(f, UTF8ToSys(fname));
-  {$I-} Rewrite(f, 1); {$I+}
-  if IOResult != 0 {
-  {
-    Result = 'Can''t create file ' + fname;
-    Exit;
-  }
-  if bufid == BUF_FLASH {
-    BlockWrite(f, flashbuffer, buflen, numwr)
-  else if bufid == BUF_EEPROM {
-    BlockWrite(f, eeprombuffer, buflen, numwr)
-  else if bufid == BUF_USERSIG {
-    BlockWrite(f, usersigbuffer, buflen, numwr);
-  CloseFile(f);
-  if numwr != buflen {
-  {
-    Result = 'Can''t write file ' + fname;
-    Exit;
-  }
-  Result = '';
+	FILE *f;
+	size_t numwr = 0;
+
+	if (buflen == 0)
+		return "Can't save file";
+
+	f = fopen(fname, "wb");
+	if (f == NULL) {
+		snprintf(resultstring, sizeof(resultstring), "Can't create file %s", fname);
+		return resultstring;
+	}
+
+	if (bufid == BUF_FLASH)
+		numwr = fwrite(flashbuffer, 1, buflen, f);
+	else if (bufid == BUF_EEPROM)
+		numwr = fwrite(eeprombuffer, 1, buflen, f);
+	else if (bufid == BUF_USERSIG)
+		numwr = fwrite(usersigbuffer, 1, buflen, f);
+
+	fclose(f);
+	if (numwr != buflen) {
+		snprintf(resultstring, sizeof(resultstring), "Can't write file %s", fname);
+		return resultstring;
+	}
+	return "";
 }
 
-function HighestUsed(uint8_t bufid; buflen:int):int;
-var i:int;
+int HighestUsed(int bufid, uint32_t buflen)
 {
-  if bufid == BUF_FLASH {
-  {
-    for i = buflen - 1 downto 0 do
-      if flashbuffer[i] != 0xff {
-      {
-        Result = i;
-        Exit;
-      }
-      Result = -1;
-  }
-  else if bufid == BUF_EEPROM {
-  {
-    for i = buflen - 1 downto 0 do
-      if eeprombuffer[i] != 0xff {
-      {
-        Result = i;
-        Exit;
-      }
-      Result = -1;
-  }
-  else if bufid == BUF_USERSIG {
-  {
-    for i = buflen - 1 downto 0 do
-      if usersigbuffer[i] != 0xff {
-      {
-        Result = i;
-        Exit;
-      }
-      Result = -1;
-  }
-  else
-    Result = -1;
+	int i;
+
+	if (bufid == BUF_FLASH) {
+		for (i = buflen - 1; i >= 0; i--)
+			if (flashbuffer[i] != 0xff)
+				return i;
+	} else if (bufid == BUF_EEPROM) {
+		for (i = buflen - 1; i >= 0; i--)
+			if (eeprombuffer[i] != 0xff)
+				return i;
+	} else if (bufid == BUF_USERSIG) {
+		for (i = buflen - 1; i >= 0; i--)
+			if (usersigbuffer[i] != 0xff)
+				return i;
+	}
+	return -1;
 }
 
-function LowestUsed(uint8_t bufid; buflen:int):int;
-var i:int;
+int LowestUsed(int bufid, uint32_t buflen)
 {
-  if bufid == BUF_FLASH {
-  {
-    for i = 0 to buflen - 1 do
-      if flashbuffer[i] != 0xff {
-      {
-        Result = i;
-        Exit;
-      }
-      Result = -1;
-  }
-  else if bufid == BUF_EEPROM {
-  {
-    for i = 0 to buflen - 1 do
-      if eeprombuffer[i] != 0xff {
-      {
-        Result = i;
-        Exit;
-      }
-      Result = -1;
-  }
-  else if bufid == BUF_USERSIG {
-  {
-    for i = 0 to buflen - 1 do
-      if usersigbuffer[i] != 0xff {
-      {
-        Result = i;
-        Exit;
-      }
-      Result = -1;
-  }
-  else
-    Result = -1;
+	int i;
+
+	if (bufid == BUF_FLASH) {
+		for (i = 0; i < buflen; i++)
+			if (flashbuffer[i] != 0xff)
+				return i;
+	} else if (bufid == BUF_EEPROM) {
+		for (i = 0; i < buflen; i++)
+			if (eeprombuffer[i] != 0xff)
+				return i;
+	} else if (bufid == BUF_USERSIG) {
+		for (i = 0; i < buflen; i++)
+			if (usersigbuffer[i] != 0xff)
+				return i;
+	}
+	return -1;
 }
 
-function IsBlockEmpty(uint8_t bufid; startadr:int; len:int):boolean;
-var i:int;
+bool IsBlockEmpty(int bufid, uint32_t startadr, uint32_t len)
 {
-  Result = false;
-  if bufid == BUF_FLASH {
-  {
-    for i = startadr to startadr + len - 1 do
-      if flashbuffer[i] != 0xff {
-        Exit;
-  }
-  else if bufid == BUF_EEPROM {
-  {
-    for i = startadr to startadr + len - 1 do
-      if eeprombuffer[i] != 0xff {
-        Exit;
-  }
-  else if bufid == BUF_USERSIG {
-  {
-    for i = startadr to startadr + len - 1 do
-      if usersigbuffer[i] != 0xff {
-        Exit;
-  }
-  Result = true;
+	uint32_t i;
+
+	if (bufid == BUF_FLASH) {
+		for (i = startadr; i < startadr + len; i++)
+			if (flashbuffer[i] != 0xff)
+				return false;
+	} else if (bufid == BUF_EEPROM) {
+		for (i = startadr; i < startadr + len; i++)
+			if (eeprombuffer[i] != 0xff)
+				return false;
+	} else if (bufid == BUF_USERSIG) {
+		for (i = startadr; i < startadr + len; i++)
+			if (usersigbuffer[i] != 0xff)
+				return false;
+	}
+	return true;
 }
 
-function IsIntelHex(fname:string; uint8_t uint8_tbufid):boolean;
-var buflen, minaddr, maxaddr:int;
+bool IsIntelHex(const char *fname, int bufid)
 {
-  Result = false;
-  if bufid == BUF_FLASH {
-    buflen = MAX_FLASH_SIZE
-  else if bufid == BUF_EEPROM {
-    buflen = MAX_EEPROM_SIZE
-  else if bufid == BUF_USERSIG {
-    buflen = MAX_USERSIG_SIZE
-  else
-    Exit;
-  maxaddr = 0; minaddr = 0;
-  if LoadIntelHex(bufid, fname, buflen, minaddr, maxaddr) == '' {
-    Result = true;
+	uint32_t buflen, minaddr = 0, maxaddr = 0;
+
+	if (bufid == BUF_FLASH)
+		buflen = MAX_FLASH_SIZE;
+	else if (bufid == BUF_EEPROM)
+		buflen = MAX_EEPROM_SIZE;
+	else if (bufid == BUF_USERSIG)
+		buflen = MAX_USERSIG_SIZE;
+	else
+		return false;
+
+	return !strlen(LoadIntelHex(bufid, fname, buflen, &minaddr, &maxaddr)) ? true : false;
 }
 
-function IsIntelHexFilename(fname:string):boolean;
-var ext:string;
+bool IsIntelHexFilename(const char *fname)
 {
-  ext = LowerCase(ExtractFileExt(fname));
-  Result = ((ext == 'hex') or (ext == 'eep') or (ext == 'rom') or (ext == 'ihx'));
+	const char *ext = strrchr(fname, '.');
+	if (ext == NULL || ext == fname || ext[-1] == '/' || ext[-1] == '\\')
+		return false;
+	ext++;
+	return !strcmp(ext, "hex") || !strcmp(ext, "eep") || !strcmp(ext, "rom") || !strcmp(ext, "ihx");
 }
 
-#endif
+// end of file
