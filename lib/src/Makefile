@@ -1,38 +1,61 @@
-CC = gcc
+CC := gcc
+
+SYS := $(shell gcc -dumpmachine)
+
+ifneq (, $(findstring linux, $(SYS)))
+  # Do linux things
+else
+ifeq (x86_64-w64-mingw32, $(SYS))
+  # mingw 64-bit target
+else
+ifeq (mingw32, $(SYS))
+  # mingw 32-bit target
+else
+ifeq (i686-pc-cygwin, $(SYS))
+  # cygwin 32-bit target
+else
+  $(error Unsupported target.)
+endif
+endif
+endif
+endif
 
 #for debugging
-CFLAGS = -O0 -g -Wall -Werror --pedantic -std=c99
-#CFLAGS = -O3 -Wall -Werror --pedantic -std=c99
-CPPFLAGS = -I. -I../include
-LDFLAGS = -g
+CFLAGS := -O0 -g -Wall -Werror --pedantic -std=c99
+#CFLAGS := -O3 -Wall -Werror --pedantic -std=c99
+CPPFLAGS := -I. -I../include
+LDFLAGS := -g
 
-OUT = ../libispprog.a
+OUT := ../lib/$(SYS)/libispprog.a
 
-SRC = globals.c membuffer.c pinsio.c processors.c spi.c
+SRC := globals.c membuffer.c pinsio.c processors.c spi.c
 
-WINDOWS_SRC = delays.c enumlpt.c inpout32.c getprogramversionstring.c portsio.c registryisp.c
+WINDOWS_SRC := delays.c enumlpt.c inpout32.c getprogramversionstring.c portsio.c registryisp.c
 
 ####################
 
 SRC += $(addprefix os/windows/,$(WINDOWS_SRC))
 
-OBJ = $(addprefix bin/,$(patsubst %.c,%.o,$(notdir $(SRC))))
+BIN := bin/$(SYS)
+
+OBJ := $(addprefix $(BIN)/,$(patsubst %.c,%.o,$(notdir $(SRC))))
 
 .PHONY: all clean
 
-all: bin $(OUT)
+all: $(BIN) $(OUT)
 
 $(OUT): $(OBJ)
+	mkdir -p $(dir $@)
 	$(AR) rcs $@ $^
 
-bin/%.o: %.c
+$(BIN)/%.o: %.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
-bin/%.o: os/windows/%.c
+$(BIN)/%.o: os/windows/%.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
-bin:
-	mkdir bin
+$(BIN):
+	mkdir -p $(BIN)
 
 clean:
-	rm -rf bin
+	rm -rf $(BIN)

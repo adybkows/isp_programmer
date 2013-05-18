@@ -1,14 +1,18 @@
-CC = gcc
+CC := gcc
 
-CFLAGS = -O3 -Wall -Werror --pedantic -std=c99
-CPPFLAGS = -I../src
-LDFLAGS = -L.. 
+SYS := $(shell gcc -dumpmachine)
 
-OUT = test_enumlpt
+CFLAGS := -O3 -Wall -Werror --pedantic -std=c99
+CPPFLAGS := -I../src
+LDFLAGS := -L../lib/$(SYS) 
 
-SRC = test_enumlpt.c
+BIN := bin/$(SYS)
 
-LIBS = -lispprog -lsetupapi -lcfgmgr32
+OUT := $(BIN)/test_enumlpt
+
+SRC := test_enumlpt.c
+
+LIBS := -lispprog -lsetupapi -lcfgmgr32
 
 ####################
 
@@ -17,7 +21,8 @@ LIBS = -lispprog -lsetupapi -lcfgmgr32
 all: $(OUT)
 
 $(OUT): $(SRC)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@ $^ $(LIBS)
+	mkdir -p $(BIN)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@ $< $(LIBS)
 
 clean:
-	rm -f $(OUT) $(OUT).exe
+	rm -rf $(BIN)

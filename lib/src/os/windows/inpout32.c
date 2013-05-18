@@ -3,8 +3,11 @@
 
 #include "os/windows/inpout32.h"
 
-#define INPOUT_DLL "inpout32.dll"
-//#define INPOUT_DLL "inpoutx64.dll"
+#ifdef __MINGW64__
+  #define INPOUT_DLL "inpoutx64.dll"
+#else
+  #define INPOUT_DLL "inpout32.dll"
+#endif
 
 typedef void (__stdcall *lpOut32)(short, short);
 typedef short (__stdcall *lpInp32)(short);

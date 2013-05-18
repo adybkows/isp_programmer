@@ -4,7 +4,7 @@
 #include <windows.h>
 #include <setupapi.h>
 
-#ifdef __MINGW32__
+#if defined(__MINGW32__) && !defined(__MINGW64__)
   #include <ddk/cfgmgr32.h>
 #else
   #include <cfgmgr32.h>
