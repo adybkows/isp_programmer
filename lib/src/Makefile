@@ -8,7 +8,7 @@ LDFLAGS = -g
 OUT = bin/ispprog.a
 
 SRC = globals.c membuffer.c processors.c
-SRC += os/windows/delays.c
+SRC += os/windows/delays.c os/windows/getprogramversionstring.c
 
 ####################
 
