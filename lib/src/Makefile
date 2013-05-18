@@ -11,7 +11,7 @@ OUT = bin/ispprog.a
 
 SRC = globals.c membuffer.c pinsio.c processors.c spi.c
 
-WINDOWS_SRC = delays.c inpout32.c getprogramversionstring.c portsio.c
+WINDOWS_SRC = delays.c enumlpt.c inpout32.c getprogramversionstring.c portsio.c
 
 ####################
 
