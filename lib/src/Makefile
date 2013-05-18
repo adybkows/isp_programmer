@@ -8,10 +8,11 @@ LDFLAGS = -g
 OUT = bin/ispprog.a
 
 SRC = globals.c membuffer.c processors.c
+SRC += os/windows/delays.c
 
 ####################
 
-OBJ = $(addprefix bin/,$(SRC:.c=.o))
+OBJ = $(addprefix bin/,$(patsubst %.c,%.o,$(notdir $(SRC))))
 
 .PHONY: all clean
 
@@ -21,6 +22,9 @@ $(OUT): $(OBJ)
 	$(AR) rcs $@ $^
 
 bin/%.o: %.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
+
+bin/%.o: os/windows/%.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 bin:
