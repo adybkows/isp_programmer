@@ -1,3 +1,5 @@
+CC = gcc
+
 #for debugging
 CFLAGS = -O0 -g -Wall --pedantic -std=c99
 
@@ -7,10 +9,13 @@ LDFLAGS = -g
 
 OUT = bin/ispprog.a
 
-SRC = globals.c membuffer.c processors.c
-SRC += os/windows/delays.c os/windows/getprogramversionstring.c
+SRC = globals.c membuffer.c pinsio.c processors.c spi.c
+
+WINDOWS_SRC = delays.c inpout32.c getprogramversionstring.c portsio.c
 
 ####################
+
+SRC += $(addprefix os/windows/,$(WINDOWS_SRC))
 
 OBJ = $(addprefix bin/,$(patsubst %.c,%.o,$(notdir $(SRC))))
 

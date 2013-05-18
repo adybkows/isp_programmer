@@ -32,7 +32,9 @@ typedef struct {
 #define ALGO_MEGA        2
 #define ALGO_DATAFLASH   3
 #define ALGO_SERIALFLASH 4
-#define ALGO_AT24_EEPROM 5
+#ifdef I2C_SUPPORT
+	#define ALGO_AT24_EEPROM 5
+#endif
 
 #define ALGO_ERASE_STD   0
 #define ALGO_ERASE_TWICE 1
@@ -55,7 +57,9 @@ typedef struct {
 #define ALGO_BUSY_POLL_RDYBSY 5
 #define ALGO_BUSY_DATAFLASH   6
 #define ALGO_BUSY_SERIALFLASH 7
-#define ALGO_BUSY_AT24_EEPROM 8
+#ifdef I2C_SUPPORT
+	#define ALGO_BUSY_AT24_EEPROM 8
+#endif
 
 #define MAX_FLASH_SIZE    17301504L   // AT45CS1282 (16.5MB)
 #define MAX_EEPROM_SIZE   4096

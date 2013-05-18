@@ -25,8 +25,10 @@ TSignature Signatures[] = {
 #include "devices_at25.inc"
 #include "devices_at25f.inc"
 #include "devices_at26.inc"
-#include "devices_at24.inc"
 
+#ifdef I2C_SUPPORT
+    #include "devices_at24.inc"
+#endif
 };
 
 const int SIGNCOUNT = sizeof(Signatures) / sizeof(Signatures[0]);
