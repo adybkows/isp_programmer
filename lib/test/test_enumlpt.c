@@ -2,7 +2,7 @@
 
 #include "enumlpt.h"
 
-int main(int argc, char **argv)
+int main(void)
 {
 	TLPTinfo ports[16];
 

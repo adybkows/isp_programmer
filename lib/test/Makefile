@@ -2,7 +2,7 @@ CC := gcc
 
 SYS := $(shell gcc -dumpmachine)
 
-CFLAGS := -g -O0 -Wall -Werror
+CFLAGS := -g -O0 -Wall -Wextra -Werror
 CPPFLAGS := -I../src
 LDFLAGS := -L../lib/$(SYS) 
 LIBS := -lispprog -lsetupapi -lcfgmgr32

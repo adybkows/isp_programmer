@@ -21,14 +21,14 @@ endif
 endif
 
 #for debugging
-CFLAGS := -O0 -g -Wall -Werror
-#CFLAGS := -O3 -Wall -Werror
+CFLAGS := -O0 -g -Wall -Wextra -Werror
+#CFLAGS := -O3 -Wall -Wextra -Werror
 CPPFLAGS := -I. -I../include
 LDFLAGS := -g
 
 OUT := ../lib/$(SYS)/libispprog.a
 
-SRC := globals.c membuffer.c pinsio.c processors.c spi.c
+SRC := dataflash.c globals.c membuffer.c pinsio.c processors.c spi.c
 
 WINDOWS_SRC := delays.c enumlpt.c inpout32.c getprogramversionstring.c portsio.c registryisp.c
 

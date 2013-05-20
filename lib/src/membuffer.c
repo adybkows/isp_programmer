@@ -324,7 +324,7 @@ int HighestUsed(int bufid, uint32_t buflen)
 
 int LowestUsed(int bufid, uint32_t buflen)
 {
-	int i;
+	uint32_t i;
 
 	if (bufid == BUF_FLASH) {
 		for (i = 0; i < buflen; i++)
