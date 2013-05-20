@@ -384,7 +384,7 @@ bool IsIntelHexFilename(const char *fname)
 	if (ext == NULL || ext == fname || ext[-1] == '/' || ext[-1] == '\\')
 		return false;
 	ext++;
-	return !strcmp(ext, "hex") || !strcmp(ext, "eep") || !strcmp(ext, "rom") || !strcmp(ext, "ihx");
+	return !strcasecmp(ext, "hex") || !strcasecmp(ext, "eep") || !strcasecmp(ext, "rom") || !strcasecmp(ext, "ihx");
 }
 
 // end of file

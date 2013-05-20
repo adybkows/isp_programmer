@@ -2,7 +2,7 @@ CC := gcc
 
 SYS := $(shell gcc -dumpmachine)
 
-CFLAGS := -g -O0 -Wall -Werror --pedantic -std=c99
+CFLAGS := -g -O0 -Wall -Werror
 CPPFLAGS := -I../src
 LDFLAGS := -L../lib/$(SYS) 
 LIBS := -lispprog -lsetupapi -lcfgmgr32
@@ -11,7 +11,7 @@ BIN := bin
 
 DATA := testdata
 
-SRC := test_enumlpt.c test_membuffer.c
+SRC := test_enumlpt.c test_membuffer.c test_processors.c
 
 ####################
 
@@ -41,6 +41,12 @@ test:
 	$(BIN)/test_membuffer ishexfname $(DATA)/test1.hex
 	$(BIN)/test_membuffer hex2bin $(DATA)/test1.hex $(DATA)/test1.bin.out
 	diff -q $(DATA)/test1.bin.out $(DATA)/test1.bin
+	#
+	$(BIN)/test_processors ATmega8
+	!( $(BIN)/test_processors foobar )
+	$(BIN)/test_processors 0x1e 0x93 0x07
+	!( $(BIN)/test_processors 0x77 0x77 0x77 )
+	@echo "===  ALL TESTS OK  ==="
 
 clean:
 	rm -rf $(BIN) $(DATA)/*.out

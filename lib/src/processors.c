@@ -35,23 +35,25 @@ const int SIGNCOUNT = sizeof(Signatures) / sizeof(Signatures[0]);
 
 int FindSignature(uint8_t s0, uint8_t s1, uint8_t s2)
 {
-  for (int n = 1; n < SIGNCOUNT; n++) {
-    TSignature *item = &Signatures[n];
-    if ((item->b0 == s0) && (item->b1 == s1) && (item->b2 == s2)) {
-      return n;
-    }
-  }
-  return -1;
+	int n;
+	for (n = 1; n < SIGNCOUNT; n++) {
+		TSignature *item = &Signatures[n];
+		if ((item->b0 == s0) && (item->b1 == s1) && (item->b2 == s2)) {
+			return n;
+		}
+	}
+	return -1;
 }
 
 int FindName(const char *name)
 {
-  for (int n = 0; n < SIGNCOUNT; n++) {
-    if ((n != DEVICE_LOCKED) && (!strcmp(Signatures[n].name, name))) {
-      return n;
-    }
-  }
-  return -1;
+	int n;
+	for (n = 0; n < SIGNCOUNT; n++) {
+		if ((n != DEVICE_LOCKED) && (!strcasecmp(Signatures[n].name, name))) {
+			return n;
+		}
+	}
+	return -1;
 }
 
 // end of file

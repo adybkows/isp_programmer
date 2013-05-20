@@ -21,8 +21,8 @@ endif
 endif
 
 #for debugging
-CFLAGS := -O0 -g -Wall -Werror --pedantic -std=c99
-#CFLAGS := -O3 -Wall -Werror --pedantic -std=c99
+CFLAGS := -O0 -g -Wall -Werror
+#CFLAGS := -O3 -Wall -Werror
 CPPFLAGS := -I. -I../include
 LDFLAGS := -g
 

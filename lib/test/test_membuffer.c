@@ -10,13 +10,15 @@
 static void syntax(void)
 {
 	printf("test_membuffer ishex|ishexfname|hex2bin|bin2hex infile [outfile]\n");
-	exit(2);
 }
 
 int main(int argc, char **argv)
 {
 	if (argc < 3)
+	{
 		syntax();
+		return 2;
+	}
 
 	const char *cmd = argv[1];
 	const char *infilename = argv[2];
@@ -32,9 +34,7 @@ int main(int argc, char **argv)
 		printf("%s\n", res ? "true" : "false");
 		// OK if hex file name
 		return !res;
-	} else if (!strcmp(cmd, "hex2bin")) {
-		if (argc != 4)
-			syntax();
+	} else if (!strcmp(cmd, "hex2bin") && (argc == 4)) {
 		uint32_t minaddr, maxaddr;
 		const char *res = LoadIntelHex(BUF_FLASH, infilename, MAX_FLASH_SIZE, &minaddr, &maxaddr);
 		if (*res) {
@@ -48,9 +48,7 @@ int main(int argc, char **argv)
 			return 2;
 		}
 		return 0;
-	} else if (!strcmp(cmd, "bin2hex")) {
-		if (argc != 4)
-			syntax();
+	} else if (!strcmp(cmd, "bin2hex") && (argc == 4)) {
 		uint32_t minaddr, maxaddr;
 		const char *res = LoadBinaryFile(BUF_FLASH, infilename, MAX_FLASH_SIZE, &minaddr, &maxaddr);
 		if (*res) {
@@ -64,7 +62,8 @@ int main(int argc, char **argv)
 			return 2;
 		}
 		return 0;
-	} else {
-		syntax();
 	}
+
+	syntax();
+	return 2;
 }
