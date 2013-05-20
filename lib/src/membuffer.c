@@ -57,7 +57,7 @@ static uint8_t hex2byte(const char *c, int *error)
 	char *ptr = NULL;
 	long v = strtol(s, &ptr, 16);
 
-	if (v == LONG_MAX || v == LONG_MIN || ptr != c + 2)
+	if (v == LONG_MAX || v == LONG_MIN || ptr != &s[2])
 		return 0;
 
 	*error = 0;
@@ -92,8 +92,8 @@ const char *LoadIntelHex(int bufid, const char *fname, uint32_t buflen, uint32_t
 		snprintf(resultstring, sizeof(resultstring), "Can't open file %s", fname);
 		return resultstring;
 	}
-	*minaddr = INT_MAX;
-	*maxaddr = INT_MIN;
+	*minaddr = 0xffffffff;
+	*maxaddr = 0;
 	do {
 		if (feof(f) || (fgets(line, sizeof(line), f) == NULL))
 			break;
@@ -101,41 +101,41 @@ const char *LoadIntelHex(int bufid, const char *fname, uint32_t buflen, uint32_t
 		do {
 			aktline++;
 			if (line[0]) {
-				if (line[1] != ':')
+				if (line[0] != ':')
 					goto bailout;
-				rlen = hex2byte(line + 2, &code);
+				rlen = hex2byte(line + 1, &code);
 				if (code != 0)
 					goto bailout;
-				radr = hex2short(line + 4, &code);
+				radr = hex2short(line + 3, &code);
 				if (code != 0)
 					goto bailout;
-				rtyp = hex2byte(line + 8, &code);
+				rtyp = hex2byte(line + 7, &code);
 				if (code != 0)
 					goto bailout;
 				if (rtyp == 2) {
 					// Extended Segment Address Record
-					b = hex2byte(line + 10, &code);
+					b = hex2byte(line + 9, &code);
 					if (code != 0)
 						goto bailout;
 					segadr = ((uint32_t) b) << 12;
-					b = hex2byte(line + 12, &code);
+					b = hex2byte(line + 11, &code);
 					if (code != 0)
 						goto bailout;
 					segadr += (((uint32_t) b) << 4);
 				} else if (rtyp == 4) {
 					// Extended Linear Address Record
-					b = hex2byte(line + 10, &code);
+					b = hex2byte(line + 9, &code);
 					if (code != 0)
 						goto bailout;
 					segadr = ((uint32_t) b) << 24;
-					b = hex2byte(line + 12, &code);
+					b = hex2byte(line + 11, &code);
 					if (code != 0)
 						goto bailout;
 					segadr += (((uint32_t) b) << 16);
 				} else if (rtyp == 0) {
 					// Data Record
 					radr += segadr; // add Extended Segment Address
-					x = 10;
+					x = 9;
 					for (n = 0; n < rlen; n++) {
 						b = hex2byte(line + x, &code);
 						if (code != 0)
@@ -205,11 +205,11 @@ const char *SaveIntelHex(int bufid, const char *fname, uint32_t buflen)
 			if (use_segaddr) {
 				// Extendedd Segment Address Record (data size over 64 KB and up to 1 MB)
 				rsum = 4 + ((radr >> 12) & 0xff) + ((radr >> 4) & 0xff);
-				fprintf(f, ":02000002%04x%02x\n", radr >> 4, (uint8_t)(0 - rsum));
+				fprintf(f, ":02000002%04x%02x\r\n", radr >> 4, (uint8_t)(0 - rsum));
 			} else if (use_linaddr) {
 				// Extended Linear Address Record (data size over 1 MB)
 				rsum = 6 + ((radr >> 24) & 0xff) + ((radr >> 16) & 0xff);
-				fprintf(f, ":02000004%04x%02x\n", radr >> 16, (uint8_t)(0 - rsum));
+				fprintf(f, ":02000004%04x%02x\r\n", radr >> 16, (uint8_t)(0 - rsum));
 			}
 		}
 		if (d1 > 16)
@@ -232,9 +232,9 @@ const char *SaveIntelHex(int bufid, const char *fname, uint32_t buflen)
 			radr++;
 			d1--;
 		}
-		fprintf(f, "%s%02x\n", line, (uint8_t)(0 - rsum));
+		fprintf(f, "%s%02x\r\n", line, (uint8_t)(0 - rsum));
 	} while (d1 > 0);
-	fprintf(f, ":00000001FF\n");
+	fprintf(f, ":00000001FF\r\n");
 	fclose(f);
 	return "";
 }
