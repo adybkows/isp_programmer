@@ -140,14 +140,14 @@
       "RSTDISBL" },
     { "BOOTRST", "BOOTSZ0", "BOOTSZ1", "", "", "", "", "" } },
 
-  { 0x1e, 0x95, 0x1, "ATmega323", PROC_TYPE_AVR, 32768L, 1024, 0, 7, 128, 0,
+  { 0x1e, 0x95, 0x1, "ATmega323", PROC_TYPE_AVR, 32768, 1024, 0, 7, 128, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_FF, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "", "", "BODEN", "BODLEVEL" },
     { "BOOTRST", "BOOTSZ0", "BOOTSZ1", "EESAVE", "", "", "JTAGEN", "OCDEN" },
     { "", "", "", "", "", "", "", "" } },
 
-  { 0x1e, 0x95, 0x2, "ATmega32", PROC_TYPE_AVR, 32768L, 1024, 0, 7, 128, 0, 0,
+  { 0x1e, 0x95, 0x2, "ATmega32", PROC_TYPE_AVR, 32768, 1024, 0, 7, 128, 0, 0,
     4, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_FF, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "BODEN",
@@ -156,7 +156,7 @@
       "OCDEN" },
     { "", "", "", "", "", "", "", "" } },
 
-  { 0x1e, 0x95, 0x3, "ATmega329", PROC_TYPE_AVR, 32768L, 1024, 0, 7, 128, 0,
+  { 0x1e, 0x95, 0x3, "ATmega329", PROC_TYPE_AVR, 32768, 1024, 0, 7, 128, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -165,7 +165,7 @@
       "OCDEN" },
     { "RSTDISBL", "BODLEVEL0", "BODLEVEL1", "", "", "", "", "" } },
 
-  { 0x1e, 0x95, 0x4, "ATmega3290", PROC_TYPE_AVR, 32768L, 1024, 0, 7, 128, 0,
+  { 0x1e, 0x95, 0x4, "ATmega3290", PROC_TYPE_AVR, 32768, 1024, 0, 7, 128, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -174,7 +174,7 @@
       "OCDEN" },
     { "RSTDISBL", "BODLEVEL0", "BODLEVEL1", "", "", "", "", "" } },
 
-  { 0x1e, 0x95, 0x5, "ATmega325", PROC_TYPE_AVR, 32768L, 1024, 0, 7, 128, 0,
+  { 0x1e, 0x95, 0x5, "ATmega325", PROC_TYPE_AVR, 32768, 1024, 0, 7, 128, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -183,7 +183,7 @@
       "OCDEN" },
     { "RSTDISBL", "BODLEVEL0", "BODLEVEL1", "", "", "", "", "" } },
 
-  { 0x1e, 0x95, 0x6, "ATmega3250", PROC_TYPE_AVR, 32768L, 1024, 0, 7, 128, 0,
+  { 0x1e, 0x95, 0x6, "ATmega3250", PROC_TYPE_AVR, 32768, 1024, 0, 7, 128, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -201,7 +201,7 @@
     { "", "", "", "", "", "", "", "" } },
 */
 
-  { 0x1e, 0x95, 0x8, "ATmega324P", PROC_TYPE_AVR, 32768L, 1024, 0, 7, 128, 0,
+  { 0x1e, 0x95, 0x8, "ATmega324P", PROC_TYPE_AVR, 32768, 1024, 0, 7, 128, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -210,7 +210,7 @@
       "OCDEN" },
     { "BODLEVEL0", "BODLEVEL1", "BODLEVEL2", "", "", "", "", "" } },
 
-  { 0x1e, 0x95, 0xf, "ATmega328P", PROC_TYPE_AVR, 32768L, 1024, 0, 7, 128, 2,
+  { 0x1e, 0x95, 0xf, "ATmega328P", PROC_TYPE_AVR, 32768, 1024, 0, 7, 128, 2,
     4, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 5,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -219,7 +219,7 @@
       "RSTDISBL" },
     { "BOOTRST", "BOOTSZ0", "BOOTSZ1", "", "", "", "", "" } },
 
-  { 0x1e, 0x96, 0x2, "ATmega64", PROC_TYPE_AVR, 65536L, 2048, 0, 8, 256, 0, 0,
+  { 0x1e, 0x96, 0x2, "ATmega64", PROC_TYPE_AVR, 65536, 2048, 0, 8, 256, 0, 0,
     4, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_FF, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "BODEN",
@@ -228,7 +228,7 @@
       "OCDEN" },
     { "WDTON", "M103C", "", "", "", "", "", "" } },
 
-  { 0x1e, 0x96, 0x3, "ATmega649", PROC_TYPE_AVR, 65536L, 2048, 0, 8, 256, 0,
+  { 0x1e, 0x96, 0x3, "ATmega649", PROC_TYPE_AVR, 65536, 2048, 0, 8, 256, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -237,7 +237,7 @@
       "OCDEN" },
     { "RSTDISBL", "BODLEVEL0", "BODLEVEL1", "", "", "", "", "" } },
 
-  { 0x1e, 0x96, 0x4, "ATmega6490", PROC_TYPE_AVR, 65536L, 2048, 0, 8, 256, 0,
+  { 0x1e, 0x96, 0x4, "ATmega6490", PROC_TYPE_AVR, 65536, 2048, 0, 8, 256, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -246,7 +246,7 @@
       "OCDEN" },
     { "RSTDISBL", "BODLEVEL0", "BODLEVEL1", "", "", "", "", "" } },
 
-  { 0x1e, 0x96, 0x5, "ATmega645", PROC_TYPE_AVR, 65536L, 2048, 0, 8, 256, 0,
+  { 0x1e, 0x96, 0x5, "ATmega645", PROC_TYPE_AVR, 65536, 2048, 0, 8, 256, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -255,7 +255,7 @@
       "OCDEN" },
     { "RSTDISBL", "BODLEVEL0", "BODLEVEL1", "", "", "", "", "" } },
 
-  { 0x1e, 0x96, 0x6, "ATmega6450", PROC_TYPE_AVR, 65536L, 2048, 0, 8, 256, 0,
+  { 0x1e, 0x96, 0x6, "ATmega6450", PROC_TYPE_AVR, 65536, 2048, 0, 8, 256, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -264,7 +264,7 @@
       "OCDEN" },
     { "RSTDISBL", "BODLEVEL0", "BODLEVEL1", "", "", "", "", "" } },
 
-  { 0x1e, 0x96, 0x8, "ATmega640", PROC_TYPE_AVR, 65536L, 4096, 0, 8, 256, 0,
+  { 0x1e, 0x96, 0x8, "ATmega640", PROC_TYPE_AVR, 65536, 4096, 0, 8, 256, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -273,7 +273,7 @@
       "OCDEN" },
     { "BODLEVEL0", "BODLEVEL1", "BODLEVEL2", "", "", "", "", "" } },
 
-  { 0x1e, 0x96, 0x9, "ATmega644", PROC_TYPE_AVR, 65536L, 2048, 0, 8, 256, 0,
+  { 0x1e, 0x96, 0x9, "ATmega644", PROC_TYPE_AVR, 65536, 2048, 0, 8, 256, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -282,7 +282,7 @@
       "OCDEN" },
     { "BODLEVEL0", "BODLEVEL1", "BODLEVEL2", "", "", "", "", "" } },
 
-  { 0x1e, 0x96, 0xa, "ATmega644P", PROC_TYPE_AVR, 65536L, 2048, 0, 8, 256, 0,
+  { 0x1e, 0x96, 0xa, "ATmega644P", PROC_TYPE_AVR, 65536, 2048, 0, 8, 256, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -291,7 +291,7 @@
       "OCDEN" },
     { "BODLEVEL0", "BODLEVEL1", "BODLEVEL2", "", "", "", "", "" } },
 
-  { 0x1e, 0x97, 0x2, "ATmega128", PROC_TYPE_AVR, 131072L, 4096, 0, 8, 256, 0,
+  { 0x1e, 0x97, 0x2, "ATmega128", PROC_TYPE_AVR, 131072, 4096, 0, 8, 256, 0,
     0, 4, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_FF, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "BODEN",
@@ -300,7 +300,7 @@
       "OCDEN" },
     { "WDTON", "M103C", "", "", "", "", "", "" } },
 
-  { 0x1e, 0x97, 0x3, "ATmega1280", PROC_TYPE_AVR, 131072L, 4096, 0, 8, 256, 0,
+  { 0x1e, 0x97, 0x3, "ATmega1280", PROC_TYPE_AVR, 131072, 4096, 0, 8, 256, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -309,7 +309,7 @@
       "OCDEN" },
     { "BODLEVEL0", "BODLEVEL1", "BODLEVEL2", "", "", "", "", "" } },
 
-  { 0x1e, 0x97, 0x4, "ATmega1281", PROC_TYPE_AVR, 131072L, 4096, 0, 8, 256, 0,
+  { 0x1e, 0x97, 0x4, "ATmega1281", PROC_TYPE_AVR, 131072, 4096, 0, 8, 256, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -318,7 +318,7 @@
       "OCDEN" },
     { "BODLEVEL0", "BODLEVEL1", "BODLEVEL2", "", "", "", "", "" } },
 
-  { 0x1e, 0x97, 0x5, "ATmega1284P", PROC_TYPE_AVR, 131072L, 4096, 0, 8, 256,
+  { 0x1e, 0x97, 0x5, "ATmega1284P", PROC_TYPE_AVR, 131072, 4096, 0, 8, 256,
     0, 0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY,
     16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
@@ -328,7 +328,7 @@
       "OCDEN" },
     { "BODLEVEL0", "BODLEVEL1", "BODLEVEL2", "", "", "", "", "" } },
 
-  { 0x1e, 0x98, 0x1, "ATmega2560", PROC_TYPE_AVR, 262144L, 4096, 0, 8, 256, 0,
+  { 0x1e, 0x98, 0x1, "ATmega2560", PROC_TYPE_AVR, 262144, 4096, 0, 8, 256, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",
@@ -337,7 +337,7 @@
       "OCDEN" },
     { "BODLEVEL0", "BODLEVEL1", "BODLEVEL2", "", "", "", "", "" } },
 
-  { 0x1e, 0x98, 0x2, "ATmega2561", PROC_TYPE_AVR, 262144L, 4096, 0, 8, 256, 0,
+  { 0x1e, 0x98, 0x2, "ATmega2561", PROC_TYPE_AVR, 262144, 4096, 0, 8, 256, 0,
     0, 1, ALGO_MEGA, ALGO_ERASE_STD, ALGO_LB_MEGA, ALGO_BUSY_POLL_RDYBSY, 16,
     { "LB1", "LB2", "BLB01", "BLB02", "BLB11", "BLB12", "", "" },
     { "CKSEL0", "CKSEL1", "CKSEL2", "CKSEL3", "SUT0", "SUT1", "CKOUT",

@@ -66,7 +66,7 @@ uint8_t ReadByte(void)
 	return x;
 }
 
-void WriteBytes(const void *ptr, int len)
+void WriteBytes(const void *ptr, uint32_t len)
 {
 	const uint8_t *b = (const uint8_t *) ptr;
 	while (len > 0) {
@@ -76,7 +76,7 @@ void WriteBytes(const void *ptr, int len)
 	}
 }
 
-void ReadBytes(void *ptr, int len)
+void ReadBytes(void *ptr, uint32_t len)
 {
 	uint8_t *b = (uint8_t *) ptr;
 	while (len > 0) {
@@ -86,7 +86,7 @@ void ReadBytes(void *ptr, int len)
 	}
 }
 
-void WriteReadBytes(void *writeptr, void *readptr, int len)
+void WriteReadBytes(void *writeptr, void *readptr, uint32_t len)
 {
 	uint8_t *wb = (uint8_t *) writeptr, *rb = (uint8_t *) readptr;
 	while (len > 0) {

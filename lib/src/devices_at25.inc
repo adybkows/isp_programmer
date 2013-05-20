@@ -1,6 +1,6 @@
   // AT25DF/AT26DF/AT25FS serial flash memories
 
-  { 0x3d, 0x1f, 0x43, "AT25DF021", PROC_TYPE_DATAFLASH, 262144L, 0, 0, 8,
+  { 0x3d, 0x1f, 0x43, "AT25DF021", PROC_TYPE_DATAFLASH, 262144, 0, 0, 8,
     1024, 0, 0, 0, ALGO_SERIALFLASH, ALGO_ERASE_STD, ALGO_LB_NONE,
     ALGO_BUSY_SERIALFLASH, 3500,
     { "", "", "", "", "", "", "", "" },
@@ -8,7 +8,7 @@
     { "", "", "", "", "", "", "", "" },
     { "", "", "", "", "", "", "", "" } },
 
-  { 0x3d, 0x1f, 0x44, "AT25DF041A", PROC_TYPE_DATAFLASH, 524288L, 0, 0, 8,
+  { 0x3d, 0x1f, 0x44, "AT25DF041A", PROC_TYPE_DATAFLASH, 524288, 0, 0, 8,
     1024, 0, 0, 0, ALGO_SERIALFLASH, ALGO_ERASE_STD, ALGO_LB_NONE,
     ALGO_BUSY_SERIALFLASH, 7000,
     { "", "", "", "", "", "", "", "" },
@@ -16,7 +16,7 @@
     { "", "", "", "", "", "", "", "" },
     { "", "", "", "", "", "", "", "" } },
 
-  { 0x3d, 0x1f, 0x45, "AT25/26DF081", PROC_TYPE_DATAFLASH, 1048576L, 0, 0, 8,
+  { 0x3d, 0x1f, 0x45, "AT25/26DF081", PROC_TYPE_DATAFLASH, 1048576, 0, 0, 8,
     1024, 0, 0, 0, ALGO_SERIALFLASH, ALGO_ERASE_STD, ALGO_LB_NONE,
     ALGO_BUSY_SERIALFLASH, 14000,
     { "", "", "", "", "", "", "", "" },
@@ -24,7 +24,7 @@
     { "", "", "", "", "", "", "", "" },
     { "", "", "", "", "", "", "", "" } },
 
-  { 0x3d, 0x1f, 0x46, "AT25/26DF161", PROC_TYPE_DATAFLASH, 2097152L, 0, 0, 8,
+  { 0x3d, 0x1f, 0x46, "AT25/26DF161", PROC_TYPE_DATAFLASH, 2097152, 0, 0, 8,
     1024, 0, 0, 0, ALGO_SERIALFLASH, ALGO_ERASE_STD, ALGO_LB_NONE,
     ALGO_BUSY_SERIALFLASH, 28000,
     { "", "", "", "", "", "", "", "" },
@@ -32,23 +32,23 @@
     { "", "", "", "", "", "", "", "" },
     { "", "", "", "", "", "", "", "" } },
 
-  { 0x3d, 0x1f, 0x47, "AT25DF321", PROC_TYPE_DATAFLASH, 4194304L, 0, 0, 8,
+  { 0x3d, 0x1f, 0x47, "AT25DF321", PROC_TYPE_DATAFLASH, 4194304, 0, 0, 8,
     1024, 0, 0, 0, ALGO_SERIALFLASH, ALGO_ERASE_STD, ALGO_LB_NONE,
-    ALGO_BUSY_SERIALFLASH, 56000L,
+    ALGO_BUSY_SERIALFLASH, 56000,
     { "", "", "", "", "", "", "", "" },
     { "", "", "", "", "", "", "", "" },
     { "", "", "", "", "", "", "", "" },
     { "", "", "", "", "", "", "", "" } },
 
-  { 0x3d, 0x1f, 0x48, "AT25DF641", PROC_TYPE_DATAFLASH, 8388608L, 0, 0, 8,
+  { 0x3d, 0x1f, 0x48, "AT25DF641", PROC_TYPE_DATAFLASH, 8388608, 0, 0, 8,
     1024, 0, 0, 0, ALGO_SERIALFLASH, ALGO_ERASE_STD, ALGO_LB_NONE,
-    ALGO_BUSY_SERIALFLASH, 112000L,
+    ALGO_BUSY_SERIALFLASH, 112000,
     { "", "", "", "", "", "", "", "" },
     { "", "", "", "", "", "", "", "" },
     { "", "", "", "", "", "", "", "" },
     { "", "", "", "", "", "", "", "" } },
 
-  { 0x3d, 0x1f, 0x66, "AT25FS010", PROC_TYPE_DATAFLASH, 131072L, 0, 0, 8,
+  { 0x3d, 0x1f, 0x66, "AT25FS010", PROC_TYPE_DATAFLASH, 131072, 0, 0, 8,
     1024, 0, 0, 0, ALGO_SERIALFLASH, ALGO_ERASE_STD, ALGO_LB_NONE,
     ALGO_BUSY_SERIALFLASH, 4000,
     { "", "", "", "", "", "", "", "" },

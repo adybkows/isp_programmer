@@ -8,6 +8,7 @@
 
 #include "membuffer.h"
 #include "processors.h"
+#include "strcasecmp.h"
 
 uint8_t flashbuffer[MAX_FLASH_SIZE];
 uint8_t eeprombuffer[MAX_EEPROM_SIZE];
@@ -384,7 +385,8 @@ bool IsIntelHexFilename(const char *fname)
 	if (ext == NULL || ext == fname || ext[-1] == '/' || ext[-1] == '\\')
 		return false;
 	ext++;
-	return !strcasecmp(ext, "hex") || !strcasecmp(ext, "eep") || !strcasecmp(ext, "rom") || !strcasecmp(ext, "ihx");
+	return !mystrcasecmp(ext, "hex") || !mystrcasecmp(ext, "eep") ||
+			!mystrcasecmp(ext, "rom") || !mystrcasecmp(ext, "ihx");
 }
 
 // end of file

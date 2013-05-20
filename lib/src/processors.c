@@ -3,6 +3,7 @@
 
 #include "globals.h"
 #include "processors.h"
+#include "strcasecmp.h"
 
 TSignature Signatures[] = {
   { 0, 0, 0, "AT89S53/8252", PROC_TYPE_OLD51, 12288, 2048, 0, 0, 0, 0, 0, 0, ALGO_STD, ALGO_ERASE_STD, ALGO_LB_89x, ALGO_BUSY_POLL_NMSB, 16,
@@ -31,7 +32,7 @@ TSignature Signatures[] = {
 #endif
 };
 
-const int SIGNCOUNT = sizeof(Signatures) / sizeof(Signatures[0]);
+const int SIGNCOUNT = (int)(sizeof(Signatures) / sizeof(Signatures[0]));
 
 int FindSignature(uint8_t s0, uint8_t s1, uint8_t s2)
 {
@@ -49,7 +50,7 @@ int FindName(const char *name)
 {
 	int n;
 	for (n = 0; n < SIGNCOUNT; n++) {
-		if ((n != DEVICE_LOCKED) && (!strcasecmp(Signatures[n].name, name))) {
+		if ((n != DEVICE_LOCKED) && (mystrcasecmp(Signatures[n].name, name) == 0)) {
 			return n;
 		}
 	}

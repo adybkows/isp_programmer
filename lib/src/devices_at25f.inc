@@ -1,6 +1,6 @@
   // AT25F serial flash memories
 
-  { 0x25, 0x1f, 0x65, "AT25F512", PROC_TYPE_SERIALFLASH, 65536L, 0, 0, 8,
+  { 0x25, 0x1f, 0x65, "AT25F512", PROC_TYPE_SERIALFLASH, 65536, 0, 0, 8,
     1024, 0, 0, 0, ALGO_SERIALFLASH, ALGO_ERASE_STD, ALGO_LB_NONE,
     ALGO_BUSY_SERIALFLASH, 2200,
     { "", "", "", "", "", "", "", "" },
@@ -8,7 +8,7 @@
     { "", "", "", "", "", "", "", "" },
     { "", "", "", "", "", "", "", "" } },
 
-  { 0x25, 0x1f, 0x60, "AT25F1024", PROC_TYPE_SERIALFLASH, 131072L, 0, 0, 8,
+  { 0x25, 0x1f, 0x60, "AT25F1024", PROC_TYPE_SERIALFLASH, 131072, 0, 0, 8,
     1024, 0, 0, 0, ALGO_SERIALFLASH, ALGO_ERASE_STD, ALGO_LB_NONE,
     ALGO_BUSY_SERIALFLASH, 4400,
     { "", "", "", "", "", "", "", "" },
@@ -16,7 +16,7 @@
     { "", "", "", "", "", "", "", "" },
     { "", "", "", "", "", "", "", "" } },
 
-  { 0x25, 0x1f, 0x63, "AT25F2048", PROC_TYPE_SERIALFLASH, 262144L, 0, 0, 8,
+  { 0x25, 0x1f, 0x63, "AT25F2048", PROC_TYPE_SERIALFLASH, 262144, 0, 0, 8,
     1024, 0, 0, 0, ALGO_SERIALFLASH, ALGO_ERASE_STD, ALGO_LB_NONE,
     ALGO_BUSY_SERIALFLASH, 4000,
     { "", "", "", "", "", "", "", "" },
@@ -24,7 +24,7 @@
     { "", "", "", "", "", "", "", "" },
     { "", "", "", "", "", "", "", "" } },
 
-  { 0x25, 0x1f, 0x64, "AT25F4096", PROC_TYPE_SERIALFLASH, 524288L, 0, 0, 8,
+  { 0x25, 0x1f, 0x64, "AT25F4096", PROC_TYPE_SERIALFLASH, 524288, 0, 0, 8,
     1024, 0, 0, 0, ALGO_SERIALFLASH, ALGO_ERASE_STD, ALGO_LB_NONE,
     ALGO_BUSY_SERIALFLASH, 8000,
     { "", "", "", "", "", "", "", "" },

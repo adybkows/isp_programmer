@@ -9,19 +9,19 @@ typedef struct {
   uint8_t b0, b1, b2;      // Signature bytes
   const char *name;        // Chip name
   uint8_t proctype;        // Processor type: PROC_TYPE_xxx
-  long fsize;              // Flash size in bytes
-  long esize;              // EEPROM size in bytes
-  long usigsize;           // User Signature size in bytes
+  uint32_t fsize;          // Flash size in bytes
+  uint32_t esize;          // EEPROM size in bytes
+  uint32_t usigsize;       // User Signature size in bytes
   uint8_t fpage;           // Flash page bits
-  long fpagesize;          // Flash page size in bytes, usually 2^fpage
+  uint32_t fpagesize;      // Flash page size in bytes, usually 2^fpage
   uint8_t epage;           // EEPROM page bits
-  long epagesize;          // EEPROM page size in bytes, usually 2^epage
+  uint32_t epagesize;      // EEPROM page size in bytes, usually 2^epage
   uint8_t osccal;          // Number of oscillator calibration bytes
   uint8_t algo;            // Programming algorithm
   uint8_t algo_erase;      // Erasing algorithm
   uint8_t algo_lb;         // Lock bits and fuses reading/programming algorithm
   uint8_t algo_busy;       // Busy check algorithm
-  long prog_time;          // Time in ms to wait after programming
+  uint32_t prog_time;      // Time in ms to wait after programming
   const char *lockbits[8];    // LSB to MSB
   const char *fusebitslo[8];  // LSB to MSB
   const char *fusebitshi[8];  // LSB to MSB
