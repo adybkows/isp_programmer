@@ -58,4 +58,4 @@ $(BIN):
 	mkdir -p $(BIN)
 
 clean:
-	rm -rf $(BIN)
+	rm -rf $(BIN) $(OUT)
