@@ -189,7 +189,7 @@ const char *SaveIntelHex(int bufid, const char *fname, uint32_t buflen)
 	if (buflen == 0)
 		return "Can't save file";
 
-	f = fopen(fname, "w");
+	f = fopen(fname, "wb");
 	if (f == NULL) {
 		snprintf(resultstring, sizeof(resultstring), "Can't create file %s", fname);
 		return resultstring;
