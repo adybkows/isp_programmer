@@ -30,7 +30,7 @@ OUT := ../lib/$(SYS)/libispprog.a
 
 SRC := dataflash.c globals.c membuffer.c pinsio.c processors.c spi.c
 
-WINDOWS_SRC := delays.c enumlpt.c inpout32.c getprogramversionstring.c portsio.c registryisp.c
+WINDOWS_SRC := delays.c enumlpt.c inpout32.c getprogramversionstring.c portsio.c registryisp.c serialflash.c
 
 ####################
 

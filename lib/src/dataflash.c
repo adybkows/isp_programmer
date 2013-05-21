@@ -45,10 +45,10 @@ void DataflashErase()
 	if (devicenr < 1)
 		return;
 
-	pagesize_big = (1 << (Signatures[devicenr - 1].fpage - 1)) + (1 << (Signatures[devicenr - 1].fpage - 6));
-	pages = Signatures[devicenr - 1].fsize / pagesize_big;
+	pagesize_big = (1 << (Signatures[devicenr].fpage - 1)) + (1 << (Signatures[devicenr].fpage - 6));
+	pages = Signatures[devicenr].fsize / pagesize_big;
 	blocks = pages / 8;
-	blockshift = Signatures[devicenr - 1].fpage - 5;
+	blockshift = Signatures[devicenr].fpage - 5;
 
 	for (i = 0; i < blocks; i++) {
 		ChipselectOn();
@@ -71,9 +71,9 @@ void DataflashReadFlashPage(uint32_t address, void *dataptr)
 	if (devicenr < 1)
 		return;
 
-	pagesize = Signatures[devicenr - 1].fpagesize;
+	pagesize = Signatures[devicenr].fpagesize;
 	pagenum = address / pagesize;
-	address = pagenum << Signatures[devicenr - 1].fpage;
+	address = pagenum << Signatures[devicenr].fpage;
 
 	ChipselectOn();
 	data[0] = 0xd2;
@@ -97,9 +97,9 @@ void DataflashWriteFlashPage(uint32_t address, const void *dataptr)
 	if (devicenr < 1)
 		return;
 
-	pagesize = Signatures[devicenr - 1].fpagesize;
+	pagesize = Signatures[devicenr].fpagesize;
 	pagenum = address / pagesize;
-	address = pagenum << Signatures[devicenr - 1].fpage;
+	address = pagenum << Signatures[devicenr].fpage;
 
 	ChipselectOn();
 	data[0] = 0x82;
