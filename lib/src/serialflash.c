@@ -222,9 +222,9 @@ void SerialflashReadSign(void *s)
 	if (b1 == 0x1f)
 		ptr[0] = 0x25; /* constant for AT25F memories */
 	else
-		ptr[0] = 0xff;/* $FF and no Manufacturer/Device ID */
+		ptr[0] = 0xff; /* $FF and no Manufacturer/Device ID */
 	ptr[1] = b1;
 	ptr[2] = b2;
 }
 
-/* End. */
+// end of file
