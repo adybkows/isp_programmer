@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "processors.h"
+#include "ispprog.h"
 
 int main(int argc, char **argv)
 {

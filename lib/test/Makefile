@@ -1,9 +1,10 @@
 CC := gcc
+CXX := g++
 
 SYS := $(shell gcc -dumpmachine)
 
 CFLAGS := -g -O0 -Wall -Wextra -Werror
-CPPFLAGS := -I../src
+CPPFLAGS := -I../include
 LDFLAGS := -L../lib/$(SYS) 
 LIBS := -lispprog -lsetupapi -lcfgmgr32
 
@@ -11,11 +12,11 @@ BIN := bin
 
 DATA := testdata
 
-SRC := test_enumlpt.c test_membuffer.c test_processors.c
+SRC := test_enumlpt.cpp test_membuffer.c test_processors.c
 
 ####################
 
-OUT := $(addprefix $(BIN)/,$(SRC:.c=))
+OUT := $(addprefix $(BIN)/,$(SRC:.c=) $(SRC:.cpp=))
 
 .PHONY: all test clean
 
@@ -25,6 +26,9 @@ $(OUT): $(BIN) ../lib/$(SYS)/libispprog.a
 
 $(BIN)/%: %.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@ $< $(LIBS)
+
+$(BIN)/%: %.cpp
+	$(CXX) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@ $< $(LIBS)
 
 $(BIN):
 	mkdir -p $(BIN)

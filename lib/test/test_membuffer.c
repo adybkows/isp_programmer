@@ -4,8 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "membuffer.h"
-#include "processors.h"
+#include "ispprog.h"
 
 static void syntax(void)
 {
