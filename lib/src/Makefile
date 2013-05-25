@@ -28,7 +28,8 @@ LDFLAGS := -g
 
 OUT := ../lib/$(SYS)/libispprog.a
 
-SRC := dataflash.c globals.c isp_eeprom.c isp_usersign.c membuffer.c pinsio.c processors.c serialflash.c spi.c
+SRC := dataflash.c globals.c isp.c isp_eeprom.c isp_flash.c isp_fusebits.c isp_lockbits.c isp_usersign.c \
+  membuffer.c pinsio.c processors.c serialflash.c spi.c
 
 WINDOWS_SRC := delays.c enumlpt.c inpout32.c getprogramversionstring.c portsio.c registryisp.c serialflash.c
 
