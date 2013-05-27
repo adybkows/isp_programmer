@@ -8,6 +8,10 @@ CPPFLAGS := -I../include
 LDFLAGS := -L../lib/$(SYS) 
 LIBS := -lispprog -lsetupapi -lcfgmgr32
 
+ifneq (,$(findstring mingw32,$(SYS)))
+  LDFLAGS += -static-libstdc++ -static-libgcc 
+endif
+
 BIN := bin
 
 DATA := testdata
