@@ -9,6 +9,3 @@
 
 # Compiled Static libraries
 *.a
-
-# Temporary file project user with Qt Creator
-*.pro.user
