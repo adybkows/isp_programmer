@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/mainicon.ico</file>
+        <file>img/fileopen.bmp</file>
+        <file>img/nofile.bmp</file>
+    </qresource>
+</RCC>

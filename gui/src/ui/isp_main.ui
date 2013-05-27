@@ -1,0 +1,902 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>isp_gui</class>
+ <widget class="QMainWindow" name="isp_gui">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>851</width>
+    <height>490</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>851</width>
+    <height>490</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>851</width>
+    <height>490</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>ISP Programmer</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../isp_gui.qrc">
+    <normaloff>:/img/mainicon.ico</normaloff>:/img/mainicon.ico</iconset>
+  </property>
+  <property name="toolTip">
+   <string/>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QPushButton" name="pushButtonResetOn">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reset O&amp;N</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonResetOff">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Rese&amp;t OFF</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonRestart">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>90</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&amp;Restart</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonReadSig">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>130</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Read &amp;signature</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonErase">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>290</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&amp;Erase</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonSetup">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>370</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Se&amp;tup</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonReadFlash">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>290</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Read Flas&amp;h</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonPgmFlash">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>290</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pgm &amp;Flash</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonVerifyFlash">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>290</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&amp;Verify Flash</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonErasePgmAll">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>290</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Erase &amp;&amp; Pgm &amp;All</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonReadEeprom">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>330</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Rea&amp;d EEPROM</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonPgmEeprom">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>330</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pgm EE&amp;PROM</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonVerifyEeprom">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>330</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Verify EEPRO&amp;M</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonFuseLockBits">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>330</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Fuse and lock bits</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonReadUserSig">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>370</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Read &amp;User Sig</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonPgmUserSig">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>370</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pgm User Sig</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonVerifyUserSig">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>370</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Verify User Sig</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonExit">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>370</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>E&amp;xit</string>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="progressBar">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>420</y>
+      <width>831</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>24</number>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+    <property name="textVisible">
+     <bool>true</bool>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+    <property name="invertedAppearance">
+     <bool>false</bool>
+    </property>
+    <property name="textDirection">
+     <enum>QProgressBar::TopToBottom</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_1">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>80</y>
+      <width>701</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelCurRes">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>10</y>
+      <width>141</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Current RESET status:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelAbout">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>170</y>
+      <width>101</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelDevSig">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>60</y>
+      <width>121</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Device signature:</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButtonAutodetect">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>10</y>
+      <width>101</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Autodetect:</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButtonForce">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>30</y>
+      <width>101</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Force:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelFileForFlash">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>100</y>
+      <width>201</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>File for programming Flash:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelFileForEeprom">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>130</y>
+      <width>201</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>File for programming EEPROM:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelFileForUserSig">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>160</y>
+      <width>201</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>File for programming User Sig.:</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_2">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>180</y>
+      <width>701</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelFileToFlash">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>200</y>
+      <width>201</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>File to read Flash into:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelFileToEeprom">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>230</y>
+      <width>201</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>File to read EEPROM into:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelFileToUserSig">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>260</y>
+      <width>201</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>File to read User Sig. into:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelHz">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>30</y>
+      <width>21</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Hz</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBoxMcu">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>20</y>
+      <width>103</width>
+      <height>28</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBoxFreq">
+    <property name="geometry">
+     <rect>
+      <x>710</x>
+      <y>20</y>
+      <width>103</width>
+      <height>28</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonOpenFlash">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>90</y>
+      <width>31</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../isp_gui.qrc">
+      <normaloff>:/img/fileopen.bmp</normaloff>:/img/fileopen.bmp</iconset>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonOpenEeprom">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>120</y>
+      <width>31</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../isp_gui.qrc">
+      <normaloff>:/img/fileopen.bmp</normaloff>:/img/fileopen.bmp</iconset>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonOpenUserSig">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>150</y>
+      <width>31</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../isp_gui.qrc">
+      <normaloff>:/img/fileopen.bmp</normaloff>:/img/fileopen.bmp</iconset>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonClearOpenFlash">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>90</y>
+      <width>31</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../isp_gui.qrc">
+      <normaloff>:/img/nofile.bmp</normaloff>:/img/nofile.bmp</iconset>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonClearOpenEeprom">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>120</y>
+      <width>31</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../isp_gui.qrc">
+      <normaloff>:/img/nofile.bmp</normaloff>:/img/nofile.bmp</iconset>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonClearOpenUserSig">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>150</y>
+      <width>31</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../isp_gui.qrc">
+      <normaloff>:/img/nofile.bmp</normaloff>:/img/nofile.bmp</iconset>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonSaveFlash">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>190</y>
+      <width>31</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../isp_gui.qrc">
+      <normaloff>:/img/fileopen.bmp</normaloff>:/img/fileopen.bmp</iconset>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonClearSaveFlash">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>190</y>
+      <width>31</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../isp_gui.qrc">
+      <normaloff>:/img/nofile.bmp</normaloff>:/img/nofile.bmp</iconset>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonSaveEeprom">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>220</y>
+      <width>31</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../isp_gui.qrc">
+      <normaloff>:/img/fileopen.bmp</normaloff>:/img/fileopen.bmp</iconset>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonClearSaveEeprom">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>220</y>
+      <width>31</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../isp_gui.qrc">
+      <normaloff>:/img/nofile.bmp</normaloff>:/img/nofile.bmp</iconset>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonSaveUserSig">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>250</y>
+      <width>31</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../isp_gui.qrc">
+      <normaloff>:/img/fileopen.bmp</normaloff>:/img/fileopen.bmp</iconset>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonClearSaveUserSig">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>250</y>
+      <width>31</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../isp_gui.qrc">
+      <normaloff>:/img/nofile.bmp</normaloff>:/img/nofile.bmp</iconset>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelResetStatus">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>30</y>
+      <width>69</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+   </widget>
+   <zorder>pushButtonVerifyFlash</zorder>
+   <zorder>pushButtonResetOn</zorder>
+   <zorder>pushButtonResetOff</zorder>
+   <zorder>pushButtonRestart</zorder>
+   <zorder>pushButtonReadSig</zorder>
+   <zorder>pushButtonErase</zorder>
+   <zorder>pushButtonSetup</zorder>
+   <zorder>pushButtonReadFlash</zorder>
+   <zorder>pushButtonPgmFlash</zorder>
+   <zorder>pushButtonErasePgmAll</zorder>
+   <zorder>pushButtonReadEeprom</zorder>
+   <zorder>pushButtonPgmEeprom</zorder>
+   <zorder>pushButtonVerifyEeprom</zorder>
+   <zorder>pushButtonFuseLockBits</zorder>
+   <zorder>pushButtonReadUserSig</zorder>
+   <zorder>pushButtonPgmUserSig</zorder>
+   <zorder>pushButtonVerifyUserSig</zorder>
+   <zorder>pushButtonExit</zorder>
+   <zorder>progressBar</zorder>
+   <zorder>line_1</zorder>
+   <zorder>labelCurRes</zorder>
+   <zorder>labelAbout</zorder>
+   <zorder>labelDevSig</zorder>
+   <zorder>radioButtonAutodetect</zorder>
+   <zorder>radioButtonForce</zorder>
+   <zorder>labelFileForFlash</zorder>
+   <zorder>labelFileForEeprom</zorder>
+   <zorder>labelFileForUserSig</zorder>
+   <zorder>line_2</zorder>
+   <zorder>labelFileToFlash</zorder>
+   <zorder>labelFileToEeprom</zorder>
+   <zorder>labelFileToUserSig</zorder>
+   <zorder>labelHz</zorder>
+   <zorder>comboBoxMcu</zorder>
+   <zorder>comboBoxFreq</zorder>
+   <zorder>pushButtonOpenFlash</zorder>
+   <zorder>pushButtonOpenEeprom</zorder>
+   <zorder>pushButtonOpenUserSig</zorder>
+   <zorder>pushButtonClearOpenFlash</zorder>
+   <zorder>pushButtonClearOpenEeprom</zorder>
+   <zorder>pushButtonClearOpenUserSig</zorder>
+   <zorder>pushButtonSaveFlash</zorder>
+   <zorder>pushButtonClearSaveFlash</zorder>
+   <zorder>pushButtonSaveEeprom</zorder>
+   <zorder>pushButtonClearSaveEeprom</zorder>
+   <zorder>pushButtonSaveUserSig</zorder>
+   <zorder>pushButtonClearSaveUserSig</zorder>
+   <zorder>labelResetStatus</zorder>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>pushButtonResetOn</tabstop>
+  <tabstop>pushButtonResetOff</tabstop>
+  <tabstop>pushButtonRestart</tabstop>
+  <tabstop>pushButtonReadSig</tabstop>
+  <tabstop>radioButtonAutodetect</tabstop>
+  <tabstop>radioButtonForce</tabstop>
+  <tabstop>comboBoxMcu</tabstop>
+  <tabstop>comboBoxFreq</tabstop>
+  <tabstop>pushButtonOpenFlash</tabstop>
+  <tabstop>pushButtonClearOpenFlash</tabstop>
+  <tabstop>pushButtonOpenEeprom</tabstop>
+  <tabstop>pushButtonClearOpenEeprom</tabstop>
+  <tabstop>pushButtonOpenUserSig</tabstop>
+  <tabstop>pushButtonClearOpenUserSig</tabstop>
+  <tabstop>pushButtonSaveFlash</tabstop>
+  <tabstop>pushButtonClearSaveFlash</tabstop>
+  <tabstop>pushButtonSaveEeprom</tabstop>
+  <tabstop>pushButtonClearSaveEeprom</tabstop>
+  <tabstop>pushButtonSaveUserSig</tabstop>
+  <tabstop>pushButtonClearSaveUserSig</tabstop>
+  <tabstop>pushButtonErase</tabstop>
+  <tabstop>pushButtonSetup</tabstop>
+  <tabstop>pushButtonReadFlash</tabstop>
+  <tabstop>pushButtonReadEeprom</tabstop>
+  <tabstop>pushButtonReadUserSig</tabstop>
+  <tabstop>pushButtonPgmFlash</tabstop>
+  <tabstop>pushButtonPgmEeprom</tabstop>
+  <tabstop>pushButtonPgmUserSig</tabstop>
+  <tabstop>pushButtonVerifyFlash</tabstop>
+  <tabstop>pushButtonVerifyEeprom</tabstop>
+  <tabstop>pushButtonVerifyUserSig</tabstop>
+  <tabstop>pushButtonErasePgmAll</tabstop>
+  <tabstop>pushButtonFuseLockBits</tabstop>
+  <tabstop>pushButtonExit</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../isp_gui.qrc"/>
+ </resources>
+ <connections/>
+</ui>
