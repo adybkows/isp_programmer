@@ -3,10 +3,10 @@
 
 #include <stdint.h>
 
-uint8_t DataflashReadStatus(void);
-void DataflashErase(void);
-void DataflashReadFlashPage(uint32_t address, void *dataptr);
-void DataflashWriteFlashPage(uint32_t address, const void *dataptr);
-void DataflashReadSign(void *s);
+uint8_t dataflash_read_status(void);
+void dataflash_erase(void);
+void dataflash_read_flash_page(uint32_t address, void *dataptr);
+void dataflash_write_flash_page(uint32_t address, const void *dataptr);
+void dataflash_read_signature(void *s);
 
 #endif // DATAFLASH_H

@@ -3,20 +3,20 @@
 
 #include <stdbool.h>
 
-void RstOn(void);
-void RstOff(void);
-void StrobeOn(void);
-void StrobeOff(void);
-void ChipselectOn(void);
-void ChipselectOff(void);
-bool ReadRst(void);
-void ClkLo(void);
-void ClkHi(void);
-void Send0(void);
-void Send1(void);
-void LedOn(void);
-void LedOff(void);
-bool ReadBit(void);
-void PinoutChanged(void);
+void reset_on(void);
+void reset_off(void);
+void strobe_on(void);
+void strobe_off(void);
+void chipselect_on(void);
+void chipselect_off(void);
+bool read_reset(void);
+void clk_lo(void);
+void clk_hi(void);
+void send_0(void);
+void send_1(void);
+void led_on(void);
+void led_off(void);
+bool read_bit(void);
+void pinout_changed(void);
 
 #endif // PINSIO_H

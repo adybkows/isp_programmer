@@ -1,9 +1,9 @@
 #ifndef REGISTRYISP_H
 #define REGISTRYISP_H
 
-void GetReg(const char *n, const char *defval, char *buff, int buffsize);
-int GetRegInt(const char *n, int defval);
-void SetReg(const char *n, const char *v);
-void SetRegInt(const char *n, int v);
+int get_reg(const char *n, const char *defval, char *buff, int buffsize);
+int get_reg_int(const char *n, int defval);
+void set_reg(const char *n, const char *v);
+void set_reg_int(const char *n, int v);
 
 #endif // REGISTRYISP_H

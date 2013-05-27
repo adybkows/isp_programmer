@@ -3,6 +3,6 @@
 
 #include <stdint.h>
 
-void Progress(uint32_t pos, uint32_t all);
+void progress_cb(uint32_t pos, uint32_t all);
 
 #endif // UICALLBACKS_H

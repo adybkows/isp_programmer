@@ -7,37 +7,37 @@
 #include "processors.h"
 #include "spi.h"
 
-uint8_t DataflashReadStatus(void)
+uint8_t dataflash_read_status(void)
 {
 	uint8_t res;
 
-	ChipselectOn();
-	WriteByte(0xd7);
-	res = ReadByte();
-	ChipselectOff();
+	chipselect_on();
+	write_byte(0xd7);
+	res = read_byte();
+	chipselect_off();
 	return res;
 }
 
-static void DataflashReadDeviceID(uint8_t *b1, uint8_t *b2, uint8_t *b3)
+static void dataflash_read_device_id(uint8_t *b1, uint8_t *b2, uint8_t *b3)
 {
-	ChipselectOn();
-	WriteByte(0x9f);
-	*b1 = ReadByte();
-	*b2 = ReadByte();
-	*b3 = ReadByte();
-	ChipselectOff();
+	chipselect_on();
+	write_byte(0x9f);
+	*b1 = read_byte();
+	*b2 = read_byte();
+	*b3 = read_byte();
+	chipselect_off();
 }
 
-static void DataflashWaitForReady()
+static void dataflash_wait_ready()
 {
 	static int64_t t1 = 0;
 
-	Tic(&t1);
+	tic(&t1);
 	do {
-	} while (!(((DataflashReadStatus() & 0x80) == 0x80) | (TocMS(t1) > 100)));
+	} while (!(((dataflash_read_status() & 0x80) == 0x80) | (toc_ms(t1) > 100)));
 }
 
-void DataflashErase()
+void dataflash_erase()
 {
 	uint32_t pagesize_big, pages, blocks, blockshift, i;
 	uint8_t data[4];
@@ -51,19 +51,19 @@ void DataflashErase()
 	blockshift = Signatures[devicenr].fpage - 5;
 
 	for (i = 0; i < blocks; i++) {
-		ChipselectOn();
+		chipselect_on();
 		data[0] = 0x50;
 		data[1] = ((i << blockshift) >> 8) & 0xff;
 		data[2] = (i << blockshift) & 0xff;
 		data[3] = 0;
-		WriteBytes(data, 4);
-		Sync();
-		ChipselectOff();
-		DataflashWaitForReady();
+		write_bytes(data, 4);
+		spi_sync();
+		chipselect_off();
+		dataflash_wait_ready();
 	}
 }
 
-void DataflashReadFlashPage(uint32_t address, void *dataptr)
+void dataflash_read_flash_page(uint32_t address, void *dataptr)
 {
 	uint32_t pagesize, pagenum;
 	uint8_t data[8];
@@ -75,7 +75,7 @@ void DataflashReadFlashPage(uint32_t address, void *dataptr)
 	pagenum = address / pagesize;
 	address = pagenum << Signatures[devicenr].fpage;
 
-	ChipselectOn();
+	chipselect_on();
 	data[0] = 0xd2;
 	data[1] = (address >> 16) & 0xff;
 	data[2] = (address >> 8) & 0xff;
@@ -84,12 +84,12 @@ void DataflashReadFlashPage(uint32_t address, void *dataptr)
 	data[5] = 0;
 	data[6] = 0;
 	data[7] = 0;
-	WriteBytes(data, 8);
-	ReadBytes(dataptr, pagesize);
-	ChipselectOff();
+	write_bytes(data, 8);
+	read_bytes(dataptr, pagesize);
+	chipselect_off();
 }
 
-void DataflashWriteFlashPage(uint32_t address, const void *dataptr)
+void dataflash_write_flash_page(uint32_t address, const void *dataptr)
 {
 	uint32_t pagesize, pagenum;
 	uint8_t data[4];
@@ -101,25 +101,25 @@ void DataflashWriteFlashPage(uint32_t address, const void *dataptr)
 	pagenum = address / pagesize;
 	address = pagenum << Signatures[devicenr].fpage;
 
-	ChipselectOn();
+	chipselect_on();
 	data[0] = 0x82;
 	data[1] = (address >> 16) & 0xff;
 	data[2] = (address >> 8) & 0xff;
 	data[3] = address & 0xff;
-	WriteBytes(data, 4);
-	WriteBytes(dataptr, pagesize);
-	Sync();
-	ChipselectOff();
-	DataflashWaitForReady();
+	write_bytes(data, 4);
+	write_bytes(dataptr, pagesize);
+	spi_sync();
+	chipselect_off();
+	dataflash_wait_ready();
 }
 
-void DataflashReadSign(void *s)
+void dataflash_read_signature(void *s)
 {
 	static uint8_t data[3] = { 0, 0, 0 };
 	uint8_t b, *ptr = (uint8_t *) s;
 
-	b = DataflashReadStatus();
-	DataflashReadDeviceID(data, &data[1], &data[2]);
+	b = dataflash_read_status();
+	dataflash_read_device_id(data, &data[1], &data[2]);
 	if (data[0] != 0xff && data[1] != 0xff && data[2] != 0xff) {
 		// memory size mask and page size bit
 		ptr[0] = b & 0x3d;

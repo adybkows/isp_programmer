@@ -6,7 +6,7 @@
 #include "processors.h"
 #include "spi.h"
 
-int ISPReadUserSign_MakeRequest(uint32_t address, void *buf)
+int isp_read_user_signature_make_request(uint32_t address, void *buf)
 {
 	if (proctype == PROC_TYPE_S2051) {
 		/* AT89S2051/4051 User Signature Bytes */
@@ -20,20 +20,20 @@ int ISPReadUserSign_MakeRequest(uint32_t address, void *buf)
 	return 0;
 }
 
-uint8_t ISPReadUserSign(uint32_t address)
+uint8_t isp_read_user_signature(uint32_t address)
 {
 	uint8_t data[4];
 	int len;
 
-	len = ISPReadUserSign_MakeRequest(address, data);
+	len = isp_read_user_signature_make_request(address, data);
 	if (len > 0) {
-		WriteBytes(data, len - 1);
-		return ReadByte();
+		write_bytes(data, len - 1);
+		return read_byte();
 	}
 	return 0xff;
 }
 
-void ISPWriteUserSign(uint32_t address, uint8_t value)
+void isp_write_user_signature(uint32_t address, uint8_t value)
 {
 	uint8_t data[4];
 
@@ -43,10 +43,10 @@ void ISPWriteUserSign(uint32_t address, uint8_t value)
 		data[1] = address >> 8;
 		data[2] = address & 0xff;
 		data[3] = value;
-		WriteBytes(data, 4);
-		Sync();
+		write_bytes(data, 4);
+		spi_sync();
 	}
-	WaitMS(Signatures[devicenr].prog_time);
+	wait_ms(Signatures[devicenr].prog_time);
 }
 
 // end of file

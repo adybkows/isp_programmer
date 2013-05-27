@@ -2,102 +2,102 @@
 #include "globals.h"
 #include "pinsio.h"
 
-static void WaitCLK(int i)
+static void wait_clk(int i)
 {
 	if (MCUfreq == 0)
 		return;
 	if (proctype == PROC_TYPE_AVR) // AVR
-		WaitNS(i * tCLK_AVR);
+		wait_ns(i * tCLK_AVR);
 	else
-		WaitNS(i * tCLK_8252);
+		wait_ns(i * tCLK_8252);
 }
 
-uint8_t WriteReadByte(uint8_t n)
+uint8_t write_read_byte(uint8_t n)
 {
 	uint8_t x = 0, y;
 
 	for (y = 0; y <= 7; y++) {
 		if ((n & 128) == 128)
-			Send1();
+			send_1();
 		else
-			Send0();
+			send_0();
 		if (proctype == PROC_TYPE_AVR)
-			WaitCLK(2);
+			wait_clk(2);
 		else
-			WaitCLK(1);
-		ClkHi();
+			wait_clk(1);
+		clk_hi();
 		if (proctype == PROC_TYPE_AVR)
-			WaitCLK(4);
+			wait_clk(4);
 		else
-			WaitCLK(1);
+			wait_clk(1);
 		x <<= 1;
-		if (ReadBit())
+		if (read_bit())
 			x |= 1;
-		WaitCLK(1); /* */
-		ClkLo();
-		WaitCLK(1);
+		wait_clk(1); /* */
+		clk_lo();
+		wait_clk(1);
 		n <<= 1;
 	}
 	return x;
 }
 
-void WriteByte(uint8_t n)
+void write_byte(uint8_t n)
 {
-	WriteReadByte(n);
+	write_read_byte(n);
 }
 
-uint8_t ReadByte(void)
+uint8_t read_byte(void)
 {
 	uint8_t x = 0, y;
 
 	for (y = 0; y <= 7; y++) {
-		ClkHi();
+		clk_hi();
 		if (proctype == PROC_TYPE_AVR)
-			WaitCLK(4);
+			wait_clk(4);
 		else
-			WaitCLK(1);
+			wait_clk(1);
 		x <<= 1;
-		if (ReadBit())
+		if (read_bit())
 			x |= 1;
-		WaitCLK(1); /* */
-		ClkLo();
-		WaitCLK(3);
+		wait_clk(1); /* */
+		clk_lo();
+		wait_clk(3);
 	}
 	return x;
 }
 
-void WriteBytes(const void *ptr, uint32_t len)
+void write_bytes(const void *ptr, uint32_t len)
 {
 	const uint8_t *b = (const uint8_t *) ptr;
 	while (len > 0) {
-		WriteByte(*b);
+		write_byte(*b);
 		b++;
 		len--;
 	}
 }
 
-void ReadBytes(void *ptr, uint32_t len)
+void read_bytes(void *ptr, uint32_t len)
 {
 	uint8_t *b = (uint8_t *) ptr;
 	while (len > 0) {
-		*b = ReadByte();
+		*b = read_byte();
 		b++;
 		len--;
 	}
 }
 
-void WriteReadBytes(void *writeptr, void *readptr, uint32_t len)
+void write_read_bytes(void *writeptr, void *readptr, uint32_t len)
 {
 	uint8_t *wb = (uint8_t *) writeptr, *rb = (uint8_t *) readptr;
 	while (len > 0) {
-		*rb = WriteReadByte(*wb);
+		*rb = write_read_byte(*wb);
 		wb++;
 		rb++;
 		len--;
 	}
 }
 
-void Sync()
+void spi_sync()
 {
 	/* */
 }

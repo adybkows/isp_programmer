@@ -8,7 +8,7 @@
 #include "membuffer.h"
 #include "spi.h"
 
-void WaitForReadyEEPROM(uint32_t address, uint8_t value)
+void wait_ready_eeprom(uint32_t address, uint8_t value)
 {
 	int64_t t1;
 	uint8_t b;
@@ -16,41 +16,41 @@ void WaitForReadyEEPROM(uint32_t address, uint8_t value)
 	switch (Signatures[devicenr].algo_busy) {
 
 		case ALGO_BUSY_WAIT:
-			WaitMS(Signatures[devicenr].prog_time);
+			wait_ms(Signatures[devicenr].prog_time);
 			break;
 
 		case ALGO_BUSY_POLL_00FF:
 			if (value != 0 && value != 0xff) {
-				WaitMS(1);
-				Tic(&t1);
+				wait_ms(1);
+				tic(&t1);
 				do {
-					b = ISPReadEEPROM(address);
-				} while (!((b == value) | (TocMS(t1) > 100)));
+					b = isp_read_eeprom(address);
+				} while (!((b == value) | (toc_ms(t1) > 100)));
 			} else
-				WaitMS(Signatures[devicenr].prog_time);
+				wait_ms(Signatures[devicenr].prog_time);
 			break;
 
 		case ALGO_BUSY_POLL_FF:
 		case ALGO_BUSY_POLL_NMSB:
 			if (value != 0xff) {
-				WaitMS(1);
-				Tic(&t1);
+				wait_ms(1);
+				tic(&t1);
 				do {
-					b = ISPReadEEPROM(address);
-				} while (!((b == value) | (TocMS(t1) > 100)));
+					b = isp_read_eeprom(address);
+				} while (!((b == value) | (toc_ms(t1) > 100)));
 			} else
-				WaitMS(Signatures[devicenr].prog_time);
+				wait_ms(Signatures[devicenr].prog_time);
 			break;
 
 		case ALGO_BUSY_POLL_RDYBSY:
-			Tic(&t1);
+			tic(&t1);
 			do {
-			} while (!(ISPPollReady() | (TocMS(t1) > 100)));
+			} while (!(isp_poll_ready() | (toc_ms(t1) > 100)));
 			break;
 	}
 }
 
-int ISPReadEEPROM_MakeRequest(uint32_t address, void *buf)
+int isp_read_eeprom_make_request(uint32_t address, void *buf)
 {
 	uint8_t *data = (uint8_t *) buf;
 	int res;
@@ -72,28 +72,28 @@ int ISPReadEEPROM_MakeRequest(uint32_t address, void *buf)
 	return res;
 }
 
-uint8_t ISPReadEEPROM(uint32_t address)
+uint8_t isp_read_eeprom(uint32_t address)
 {
 	uint8_t data[4];
 	uint8_t res;
 	int len;
 
 	res = 0xff;
-	len = ISPReadEEPROM_MakeRequest(address, data);
+	len = isp_read_eeprom_make_request(address, data);
 	if (len > 0) {
-		WriteBytes(data, len - 1);
-		res = ReadByte();
+		write_bytes(data, len - 1);
+		res = read_byte();
 	}
 	return res;
 }
 
-void ISPReadEEPROMPage(uint32_t address, void *buf)
+void isp_read_eeprom_page(uint32_t address, void *buf)
 {
 	if (proctype == PROC_TYPE_AVR)
-		ISPReadMemoryBlock(BUF_EEPROM, address, buf, Signatures[devicenr].epagesize);
+		isp_read_memory_block(BUF_EEPROM, address, buf, Signatures[devicenr].epagesize);
 }
 
-void ISPWriteEEPROM(uint32_t address, uint8_t value)
+void isp_write_eeprom(uint32_t address, uint8_t value)
 {
 	uint8_t data[4];
 
@@ -103,20 +103,20 @@ void ISPWriteEEPROM(uint32_t address, uint8_t value)
 		data[1] = address >> 8;
 		data[2] = address & 0xff;
 		data[3] = value;
-		WriteBytes(data, 4);
-		Sync();
+		write_bytes(data, 4);
+		spi_sync();
 	} else {
 		/* AT89S53 / AT89S8252 */
 		data[0] = (((address >> 8) & 0xff) << 3) | 6;
 		data[1] = address & 0xff;
 		data[2] = value;
-		WriteBytes(data, 3);
-		Sync();
+		write_bytes(data, 3);
+		spi_sync();
 	}
-	WaitForReadyEEPROM(address, value);
+	wait_ready_eeprom(address, value);
 }
 
-void ISPWriteEEPROMPage(uint32_t address, const void *buf)
+void isp_write_eeprom_page(uint32_t address, const void *buf)
 {
 	uint32_t pagesize, pagemask, raddr;
 	uint8_t data[4];
@@ -133,7 +133,7 @@ void ISPWriteEEPROMPage(uint32_t address, const void *buf)
 		data[1] = (raddr & pagemask) >> 8;
 		data[2] = (raddr & pagemask) & 0xff;
 		data[3] = *ptr;
-		WriteBytes(data, 4);
+		write_bytes(data, 4);
 		ptr++;
 	}
 	/* Write EEPROM Memory Page */
@@ -141,10 +141,10 @@ void ISPWriteEEPROMPage(uint32_t address, const void *buf)
 	data[1] = (address & (~pagemask)) >> 8;
 	data[2] = (address & (~pagemask)) & 0xff;
 	data[3] = 0;
-	WriteBytes(data, 4);
-	Sync();
+	write_bytes(data, 4);
+	spi_sync();
 	ptr = (uint8_t *) buf;
-	WaitForReadyEEPROM(address, *ptr);
+	wait_ready_eeprom(address, *ptr);
 }
 
 // end of file

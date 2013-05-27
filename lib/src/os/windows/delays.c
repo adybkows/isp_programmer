@@ -3,7 +3,7 @@
 
 static int64_t persec = 0;
 
-void DelaysInit(void)
+void delays_init(void)
 {
 	LARGE_INTEGER t;
 
@@ -12,17 +12,17 @@ void DelaysInit(void)
 	persec = t.QuadPart;
 }
 
-void WaitS(int x)
+void wait_s(int x)
 {
 	Sleep(x * 1000);
 }
 
-void WaitMS(int x)
+void wait_ms(int x)
 {
 	Sleep(x);
 }
 
-void WaitUS(int x)
+void wait_us(int x)
 {
 	LARGE_INTEGER f1, f2;
 	long c;
@@ -36,7 +36,7 @@ void WaitUS(int x)
 	} while (f2.QuadPart < c);
 }
 
-void WaitNS(int x)
+void wait_ns(int x)
 {
 	LARGE_INTEGER f1, f2;
 	long c;
@@ -50,7 +50,7 @@ void WaitNS(int x)
 	} while (f2.QuadPart < c);
 }
 
-void Tic(int64_t *t)
+void tic(int64_t *t)
 {
 	LARGE_INTEGER t1;
 
@@ -59,7 +59,7 @@ void Tic(int64_t *t)
 }
 
 /* returns time difference in ms */
-int64_t TocMS(int64_t t)
+int64_t toc_ms(int64_t t)
 {
   LARGE_INTEGER t2;
 
@@ -68,7 +68,7 @@ int64_t TocMS(int64_t t)
 }
 
 /* returns time difference in us */
-int64_t TocUS(int64_t t)
+int64_t toc_us(int64_t t)
 {
   LARGE_INTEGER t2;
 
@@ -77,7 +77,7 @@ int64_t TocUS(int64_t t)
 }
 
 /* returns time difference in ns */
-int64_t TocNS(int64_t t)
+int64_t toc_ns(int64_t t)
 {
   LARGE_INTEGER t2;
 

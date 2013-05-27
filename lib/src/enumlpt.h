@@ -9,6 +9,6 @@ typedef struct
 	uint16_t baseaddr;
 } TLPTinfo;
 
-int EnumLPT(TLPTinfo *lpttab, int maxports);
+int enum_lpt(TLPTinfo *lpttab, int maxports);
 
 #endif // ENUMLPT_H

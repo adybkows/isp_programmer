@@ -3,22 +3,23 @@
 
 static const char MASTER_KEY[] = "Software\\ISPProg";
 
-void GetReg(const char *n, const char *defval, char *buff, int buffsize)
+int get_reg(const char *n, const char *defval, char *buff, int buffsize)
 {
 	HKEY hKey;
 	if (RegOpenKeyEx(HKEY_CURRENT_USER, MASTER_KEY, 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
 		DWORD type, len = buffsize;
 		if (RegQueryValueEx(hKey, n, NULL, &type, (LPBYTE) buff, &len) == ERROR_SUCCESS && type == REG_SZ) {
 			RegCloseKey(hKey);
-			return;
+			return (int) len;
 		}
 		RegCloseKey(hKey);
 	}
 	strncpy(buff, defval, buffsize);
 	buff[buffsize - 1] = 0;
+	return strlen(defval) + 1;
 }
 
-int GetRegInt(const char *n, int defval)
+int get_reg_int(const char *n, int defval)
 {
 	HKEY hKey;
 	if (RegOpenKeyEx(HKEY_CURRENT_USER, MASTER_KEY, 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
@@ -32,7 +33,7 @@ int GetRegInt(const char *n, int defval)
 	return defval;
 }
 
-void SetReg(const char *n, const char *v)
+void set_reg(const char *n, const char *v)
 {
 	HKEY hKey;
 	if (RegCreateKeyEx(HKEY_CURRENT_USER, MASTER_KEY, 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL) == ERROR_SUCCESS) {
@@ -41,7 +42,7 @@ void SetReg(const char *n, const char *v)
 	}
 }
 
-void SetRegInt(const char *n, int v)
+void set_reg_int(const char *n, int v)
 {
 	HKEY hKey;
 	if (RegCreateKeyEx(HKEY_CURRENT_USER, MASTER_KEY, 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL) == ERROR_SUCCESS) {

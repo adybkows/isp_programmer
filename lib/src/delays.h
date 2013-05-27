@@ -3,16 +3,16 @@
 
 #include <stdint.h>
 
-void DelaysInit(void);
+void delays_init(void);
 
-void WaitS(int x);
-void WaitMS(int x);
-void WaitUS(int x);
-void WaitNS(int x);
+void wait_s(int x);
+void wait_ms(int x);
+void wait_us(int x);
+void wait_ns(int x);
 
-void Tic(int64_t *t);
-int64_t TocMS(int64_t t);
-int64_t TocUS(int64_t t);
-int64_t TocNS(int64_t t);
+void tic(int64_t *t);
+int64_t toc_ms(int64_t t);
+int64_t toc_us(int64_t t);
+int64_t toc_ns(int64_t t);
 
 #endif // DELAYS_H

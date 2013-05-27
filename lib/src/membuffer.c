@@ -16,7 +16,7 @@ uint8_t usersigbuffer[MAX_USERSIG_SIZE];
 
 static char resultstring[1024];
 
-void ClearBuffer(int bufid)
+void clear_buffer(int bufid)
 {
 	switch (bufid) {
 		case BUF_FLASH:
@@ -31,20 +31,20 @@ void ClearBuffer(int bufid)
 	}
 }
 
-const char *LoadFile(int bufid, int filetype, const char *fname, uint32_t buflen, uint32_t *minaddr, uint32_t *maxaddr)
+const char *load_file(int bufid, int filetype, const char *fname, uint32_t buflen, uint32_t *minaddr, uint32_t *maxaddr)
 {
 	if (filetype == FILE_TYPE_INTELHEX)
-		return LoadIntelHex(bufid, fname, buflen, minaddr, maxaddr);
+		return load_hex_file(bufid, fname, buflen, minaddr, maxaddr);
 	else
-		return LoadBinaryFile(bufid, fname, buflen, minaddr, maxaddr);
+		return load_binary_file(bufid, fname, buflen, minaddr, maxaddr);
 }
 
-const char *SaveFile(int bufid, int filetype, const char *fname, uint32_t buflen)
+const char *save_file(int bufid, int filetype, const char *fname, uint32_t buflen)
 {
 	if (filetype == FILE_TYPE_INTELHEX)
-		return SaveIntelHex(bufid, fname, buflen);
+		return save_hex_file(bufid, fname, buflen);
 	else
-		return SaveBinaryFile(bufid, fname, buflen);
+		return save_binary_file(bufid, fname, buflen);
 }
 
 static uint8_t hex2byte(const char *c, int *error)
@@ -76,7 +76,7 @@ static uint16_t hex2short(const char *c, int *error)
 	return (msb << 8) | lsb;
 }
 
-const char *LoadIntelHex(int bufid, const char *fname, uint32_t buflen, uint32_t *minaddr, uint32_t *maxaddr)
+const char *load_hex_file(int bufid, const char *fname, uint32_t buflen, uint32_t *minaddr, uint32_t *maxaddr)
 {
 	char line[1024];
 	char *p_cr, *p_lf;
@@ -178,7 +178,7 @@ bailout:
 	return resultstring;
 }
 
-const char *SaveIntelHex(int bufid, const char *fname, uint32_t buflen)
+const char *save_hex_file(int bufid, const char *fname, uint32_t buflen)
 {
 	char line[64];
 	FILE *f;
@@ -240,7 +240,7 @@ const char *SaveIntelHex(int bufid, const char *fname, uint32_t buflen)
 	return "";
 }
 
-const char *LoadBinaryFile(int bufid, const char *fname, uint32_t buflen, uint32_t *minaddr, uint32_t *maxaddr)
+const char *load_binary_file(int bufid, const char *fname, uint32_t buflen, uint32_t *minaddr, uint32_t *maxaddr)
 {
 	FILE *f;
 	size_t numrd = 0;
@@ -274,7 +274,7 @@ const char *LoadBinaryFile(int bufid, const char *fname, uint32_t buflen, uint32
 	return "";
 }
 
-const char *SaveBinaryFile(int bufid, const char *fname, uint32_t buflen)
+const char *save_binary_file(int bufid, const char *fname, uint32_t buflen)
 {
 	FILE *f;
 	size_t numwr = 0;
@@ -303,7 +303,7 @@ const char *SaveBinaryFile(int bufid, const char *fname, uint32_t buflen)
 	return "";
 }
 
-int HighestUsed(int bufid, uint32_t buflen)
+int highest_used(int bufid, uint32_t buflen)
 {
 	int i;
 
@@ -323,7 +323,7 @@ int HighestUsed(int bufid, uint32_t buflen)
 	return -1;
 }
 
-int LowestUsed(int bufid, uint32_t buflen)
+int lowest_used(int bufid, uint32_t buflen)
 {
 	uint32_t i;
 
@@ -343,7 +343,7 @@ int LowestUsed(int bufid, uint32_t buflen)
 	return -1;
 }
 
-bool IsBlockEmpty(int bufid, uint32_t startadr, uint32_t len)
+bool is_block_empty(int bufid, uint32_t startadr, uint32_t len)
 {
 	uint32_t i;
 
@@ -363,7 +363,7 @@ bool IsBlockEmpty(int bufid, uint32_t startadr, uint32_t len)
 	return true;
 }
 
-bool IsIntelHex(const char *fname, int bufid)
+bool is_hex_file(const char *fname, int bufid)
 {
 	uint32_t buflen, minaddr = 0, maxaddr = 0;
 
@@ -376,10 +376,10 @@ bool IsIntelHex(const char *fname, int bufid)
 	else
 		return false;
 
-	return !strlen(LoadIntelHex(bufid, fname, buflen, &minaddr, &maxaddr)) ? true : false;
+	return !strlen(load_hex_file(bufid, fname, buflen, &minaddr, &maxaddr)) ? true : false;
 }
 
-bool IsIntelHexFilename(const char *fname)
+bool is_hex_filename(const char *fname)
 {
 	const char *ext = strrchr(fname, '.');
 	if (ext == NULL || ext == fname || ext[-1] == '/' || ext[-1] == '\\')

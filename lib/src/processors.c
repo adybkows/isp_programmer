@@ -34,7 +34,7 @@ TSignature Signatures[] = {
 
 const int SIGNCOUNT = (int)(sizeof(Signatures) / sizeof(Signatures[0]));
 
-int FindSignature(uint8_t s0, uint8_t s1, uint8_t s2)
+int proc_find_signature(uint8_t s0, uint8_t s1, uint8_t s2)
 {
 	int n;
 	for (n = 1; n < SIGNCOUNT; n++) {
@@ -46,7 +46,7 @@ int FindSignature(uint8_t s0, uint8_t s1, uint8_t s2)
 	return -1;
 }
 
-int FindName(const char *name)
+int proc_find_name(const char *name)
 {
 	int n;
 	for (n = 0; n < SIGNCOUNT; n++) {

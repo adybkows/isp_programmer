@@ -24,24 +24,24 @@ int main(int argc, char **argv)
 	const char *outfilename = (argc == 4) ? argv[3] : NULL;
 
 	if (!strcmp(cmd, "ishex")) {
-		bool res = IsIntelHex(infilename, BUF_FLASH);
+		bool res = is_hex_file(infilename, BUF_FLASH);
 		printf("%s\n", res ? "true" : "false");
 		// OK if hex
 		return !res;
 	} else if (!strcmp(cmd, "ishexfname")) {
-		bool res = IsIntelHexFilename(infilename);
+		bool res = is_hex_filename(infilename);
 		printf("%s\n", res ? "true" : "false");
 		// OK if hex file name
 		return !res;
 	} else if (!strcmp(cmd, "hex2bin") && (argc == 4)) {
 		uint32_t minaddr, maxaddr;
-		const char *res = LoadIntelHex(BUF_FLASH, infilename, MAX_FLASH_SIZE, &minaddr, &maxaddr);
+		const char *res = load_hex_file(BUF_FLASH, infilename, MAX_FLASH_SIZE, &minaddr, &maxaddr);
 		if (*res) {
 			printf("%s\n", res);
 			return 2;
 		}
 		printf("minaddr=0x%x maxaddr=0x%x len=%u\n", minaddr, maxaddr, maxaddr + 1);
-		res = SaveBinaryFile(BUF_FLASH, outfilename, maxaddr + 1);
+		res = save_binary_file(BUF_FLASH, outfilename, maxaddr + 1);
 		if (*res) {
 			printf("%s\n", res);
 			return 2;
@@ -49,13 +49,13 @@ int main(int argc, char **argv)
 		return 0;
 	} else if (!strcmp(cmd, "bin2hex") && (argc == 4)) {
 		uint32_t minaddr, maxaddr;
-		const char *res = LoadBinaryFile(BUF_FLASH, infilename, MAX_FLASH_SIZE, &minaddr, &maxaddr);
+		const char *res = load_binary_file(BUF_FLASH, infilename, MAX_FLASH_SIZE, &minaddr, &maxaddr);
 		if (*res) {
 			printf("%s\n", res);
 			return 2;
 		}
 		printf("minaddr=0x%x maxaddr=0x%x len=%u\n", minaddr, maxaddr, maxaddr + 1);
-		res = SaveIntelHex(BUF_FLASH, outfilename, maxaddr + 1);
+		res = save_hex_file(BUF_FLASH, outfilename, maxaddr + 1);
 		if (*res) {
 			printf("%s\n", res);
 			return 2;

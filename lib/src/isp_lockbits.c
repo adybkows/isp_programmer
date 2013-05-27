@@ -4,7 +4,7 @@
 #include "processors.h"
 #include "spi.h"
 
-int ISPReadLockBits(uint8_t *lb)
+int isp_read_lockbits(uint8_t *lb)
 {
 	uint8_t data[3];
 	int res = 0;
@@ -15,8 +15,8 @@ int ISPReadLockBits(uint8_t *lb)
 			data[0] = 0x58;
 			data[1] = 0;
 			data[2] = 0;
-			WriteBytes(data, 3);
-			*lb = ReadByte();
+			write_bytes(data, 3);
+			*lb = read_byte();
 			*lb = 0xf9 | (((*lb) & 0x40) >> 4) | (((*lb) & 0x80) >> 6);
 			break;
 
@@ -26,16 +26,16 @@ int ISPReadLockBits(uint8_t *lb)
 			data[0] = 0x58;
 			data[1] = 0;
 			data[2] = 0;
-			WriteBytes(data, 3);
-			*lb = ReadByte();
+			write_bytes(data, 3);
+			*lb = read_byte();
 			break;
 
 		case ALGO_LB_89S51:
 			data[0] = 0x24;
 			data[1] = 0;
 			data[2] = 0;
-			WriteBytes(data, 3);
-			*lb = ReadByte() ^ 0xff;
+			write_bytes(data, 3);
+			*lb = read_byte() ^ 0xff;
 			break;
 
 		case ALGO_LB_89S8253:
@@ -43,8 +43,8 @@ int ISPReadLockBits(uint8_t *lb)
 			data[0] = 0x24;
 			data[1] = 0;
 			data[2] = 0;
-			WriteBytes(data, 3);
-			*lb = ReadByte();
+			write_bytes(data, 3);
+			*lb = read_byte();
 			break;
 
 		default: /* no ISP command to read lock bits */
@@ -54,7 +54,7 @@ int ISPReadLockBits(uint8_t *lb)
 	return res;
 }
 
-int ISPWriteLockBits(uint8_t lb)
+int isp_write_lockbits(uint8_t lb)
 {
 	uint8_t data[4];
 	int res = 0;
@@ -65,9 +65,9 @@ int ISPWriteLockBits(uint8_t lb)
 			data[0] = 0xac;
 			data[1] = 0x7 | (lb & 0xe0);
 			data[2] = 0;
-			WriteBytes(data, 3);
-			Sync();
-			WaitMS(Signatures[devicenr].prog_time);
+			write_bytes(data, 3);
+			spi_sync();
+			wait_ms(Signatures[devicenr].prog_time);
 			break;
 
 		case ALGO_LB_89S51: /* 89S51/52 */
@@ -76,18 +76,18 @@ int ISPWriteLockBits(uint8_t lb)
 			data[1] = 0xe0;
 			data[2] = 0;
 			data[3] = 0;
-			WriteBytes(data, 4);
-			Sync();
-			WaitMS(Signatures[devicenr].prog_time);
+			write_bytes(data, 4);
+			spi_sync();
+			wait_ms(Signatures[devicenr].prog_time);
 			if ((lb & 0x4) == 0) {
 				/* Mode 2, lock bit 1 activated */
 				data[0] = 0xac;
 				data[1] = 0xe1;
 				data[2] = 0;
 				data[3] = 0;
-				WriteBytes(data, 4);
-				Sync();
-				WaitMS(Signatures[devicenr].prog_time);
+				write_bytes(data, 4);
+				spi_sync();
+				wait_ms(Signatures[devicenr].prog_time);
 			}
 			if ((lb & 0x8) == 0) {
 				/* Mode 3, lock bit 2 activated */
@@ -95,9 +95,9 @@ int ISPWriteLockBits(uint8_t lb)
 				data[1] = 0xe2;
 				data[2] = 0;
 				data[3] = 0;
-				WriteBytes(data, 4);
-				Sync();
-				WaitMS(Signatures[devicenr].prog_time);
+				write_bytes(data, 4);
+				spi_sync();
+				wait_ms(Signatures[devicenr].prog_time);
 			}
 			if ((lb & 0x10) == 0) {
 				/* Mode 4, lock bit 3 activated */
@@ -105,9 +105,9 @@ int ISPWriteLockBits(uint8_t lb)
 				data[1] = 0xe3;
 				data[2] = 0;
 				data[3] = 0;
-				WriteBytes(data, 4);
-				Sync();
-				WaitMS(Signatures[devicenr].prog_time);
+				write_bytes(data, 4);
+				spi_sync();
+				wait_ms(Signatures[devicenr].prog_time);
 			}
 			break;
 
@@ -119,9 +119,9 @@ int ISPWriteLockBits(uint8_t lb)
 			data[1] = 0xf9 | (lb & 0x6);
 			data[2] = 0;
 			data[3] = 0;
-			WriteBytes(data, 4);
-			Sync();
-			WaitMS(Signatures[devicenr].prog_time);
+			write_bytes(data, 4);
+			spi_sync();
+			wait_ms(Signatures[devicenr].prog_time);
 			break;
 
 		case ALGO_LB_MEGA: /* ATmega */
@@ -129,9 +129,9 @@ int ISPWriteLockBits(uint8_t lb)
 			data[1] = 0xe0;
 			data[2] = 0;
 			data[3] = 0xc0 | (lb & 0x3f);
-			WriteBytes(data, 4);
-			Sync();
-			WaitMS(Signatures[devicenr].prog_time);
+			write_bytes(data, 4);
+			spi_sync();
+			wait_ms(Signatures[devicenr].prog_time);
 			break;
 
 		case ALGO_LB_89S8253:
@@ -140,9 +140,9 @@ int ISPWriteLockBits(uint8_t lb)
 			data[1] = 0xe0 | (lb & 0x7);
 			data[2] = 0;
 			data[3] = 0;
-			WriteBytes(data, 4);
-			Sync();
-			WaitMS(Signatures[devicenr].prog_time);
+			write_bytes(data, 4);
+			spi_sync();
+			wait_ms(Signatures[devicenr].prog_time);
 			break;
 
 		default: /* no ISP command to write lock bits */
@@ -152,7 +152,7 @@ int ISPWriteLockBits(uint8_t lb)
 	return res;
 }
 
-bool AnyLock()
+bool any_lockbits()
 {
 	int i;
 

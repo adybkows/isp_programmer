@@ -4,12 +4,12 @@
 #include "processors.h"
 #include "spi.h"
 
-int ISPReadFuseBits(uint8_t *fblo, uint8_t *fbhi, uint8_t *fbext)
+int isp_read_fusebits(uint8_t *fblo, uint8_t *fbhi, uint8_t *fbext)
 {
 	uint8_t data[3];
 	int res;
 
-	if (!AnyFuse()) {
+	if (!any_fusebits()) {
 		/* no fuse bits accessible by ISP */
 		return -1;
 	}
@@ -25,48 +25,48 @@ int ISPReadFuseBits(uint8_t *fblo, uint8_t *fbhi, uint8_t *fbext)
 			data[0] = 0x21;
 			data[1] = 0;
 			data[2] = 0;
-			WriteBytes(data, 3);
-			*fblo = ReadByte() & 0xf;
+			write_bytes(data, 3);
+			*fblo = read_byte() & 0xf;
 			break;
 
 		case ALGO_LB_2323:
 			data[0] = 0x58;
 			data[1] = 0;
 			data[2] = 0;
-			WriteBytes(data, 3);
-			*fblo = ReadByte() & 0x1;
+			write_bytes(data, 3);
+			*fblo = read_byte() & 0x1;
 			break;
 
 		case ALGO_LB_2333:
 			data[0] = 0xa0;
 			data[1] = 0;
 			data[2] = 0;
-			WriteBytes(data, 3);
-			*fblo = ReadByte();
+			write_bytes(data, 3);
+			*fblo = read_byte();
 			break;
 
 		case ALGO_LB_MEGA:
 		case ALGO_LB_TINY:
-			if (AnyFuseLo()) {
+			if (any_fusebits_low()) {
 				data[0] = 0x50;
 				data[1] = 0;
 				data[2] = 0;
-				WriteBytes(data, 3);
-				*fblo = ReadByte();
+				write_bytes(data, 3);
+				*fblo = read_byte();
 			}
-			if (AnyFuseHi()) {
+			if (any_fusebits_high()) {
 				data[0] = 0x58;
 				data[1] = 0x8;
 				data[2] = 0;
-				WriteBytes(data, 3);
-				*fbhi = ReadByte();
+				write_bytes(data, 3);
+				*fbhi = read_byte();
 			}
-			if (AnyFuseExt()) {
+			if (any_fusebits_ext()) {
 				data[0] = 0x50;
 				data[1] = 0x8;
 				data[2] = 0;
-				WriteBytes(data, 3);
-				*fbext = ReadByte();
+				write_bytes(data, 3);
+				*fbext = read_byte();
 			}
 			break;
 
@@ -77,11 +77,11 @@ int ISPReadFuseBits(uint8_t *fblo, uint8_t *fbhi, uint8_t *fbext)
 	return res;
 }
 
-void ISPWriteFuseLoBits(uint8_t fuse)
+void isp_write_low_fusebits(uint8_t fuse)
 {
 	uint8_t data[4];
 
-	if (!AnyFuseLo())
+	if (!any_fusebits_low())
 		return;
 
 	switch (Signatures[devicenr].algo_lb) {
@@ -92,9 +92,9 @@ void ISPWriteFuseLoBits(uint8_t fuse)
 			data[1] = 0x10 | (fuse & 0xf);
 			data[2] = 0;
 			data[3] = 0;
-			WriteBytes(data, 4);
-			Sync();
-			WaitMS(Signatures[devicenr].prog_time);
+			write_bytes(data, 4);
+			spi_sync();
+			wait_ms(Signatures[devicenr].prog_time);
 			break;
 
 		case ALGO_LB_MEGA:
@@ -103,9 +103,9 @@ void ISPWriteFuseLoBits(uint8_t fuse)
 			data[1] = 0xa0;
 			data[2] = 0;
 			data[3] = fuse;
-			WriteBytes(data, 4);
-			Sync();
-			WaitMS(Signatures[devicenr].prog_time);
+			write_bytes(data, 4);
+			spi_sync();
+			wait_ms(Signatures[devicenr].prog_time);
 			break;
 
 		case ALGO_LB_2323:
@@ -113,9 +113,9 @@ void ISPWriteFuseLoBits(uint8_t fuse)
 			data[1] = 0xbe | (fuse & 0x1);
 			data[2] = 0;
 			data[3] = 0;
-			WriteBytes(data, 4);
-			Sync();
-			WaitMS(Signatures[devicenr].prog_time);
+			write_bytes(data, 4);
+			spi_sync();
+			wait_ms(Signatures[devicenr].prog_time);
 			break;
 
 		case ALGO_LB_2333:
@@ -123,18 +123,18 @@ void ISPWriteFuseLoBits(uint8_t fuse)
 			data[1] = 0xa0 | (fuse & 0x1f);
 			data[2] = 0;
 			data[3] = 0;
-			WriteBytes(data, 4);
-			Sync();
-			WaitMS(Signatures[devicenr].prog_time);
+			write_bytes(data, 4);
+			spi_sync();
+			wait_ms(Signatures[devicenr].prog_time);
 			break;
 	}
 }
 
-void ISPWriteFuseHiBits(uint8_t fuse)
+void isp_write_high_fusebits(uint8_t fuse)
 {
 	uint8_t data[4];
 
-	if (!AnyFuseHi())
+	if (!any_fusebits_high())
 		return;
 
 	if (Signatures[devicenr].algo != ALGO_MEGA)
@@ -144,16 +144,16 @@ void ISPWriteFuseHiBits(uint8_t fuse)
 	data[1] = 0xa8;
 	data[2] = 0;
 	data[3] = fuse;
-	WriteBytes(data, 4);
-	Sync();
-	WaitMS(Signatures[devicenr].prog_time);
+	write_bytes(data, 4);
+	spi_sync();
+	wait_ms(Signatures[devicenr].prog_time);
 }
 
-void ISPWriteFuseExtBits(uint8_t fuse)
+void isp_write_ext_fusebits(uint8_t fuse)
 {
 	uint8_t data[4];
 
-	if (!AnyFuseExt())
+	if (!any_fusebits_ext())
 		return;
 
 	if (Signatures[devicenr].algo != ALGO_MEGA)
@@ -163,12 +163,12 @@ void ISPWriteFuseExtBits(uint8_t fuse)
 	data[1] = 0xa4;
 	data[2] = 0;
 	data[3] = fuse;
-	WriteBytes(data, 4);
-	Sync();
-	WaitMS(Signatures[devicenr].prog_time);
+	write_bytes(data, 4);
+	spi_sync();
+	wait_ms(Signatures[devicenr].prog_time);
 }
 
-bool AnyFuseLo(void)
+bool any_fusebits_low(void)
 {
 	int i;
 
@@ -179,7 +179,7 @@ bool AnyFuseLo(void)
 	return false;
 }
 
-bool AnyFuseHi()
+bool any_fusebits_high()
 {
 	int i;
 
@@ -190,7 +190,7 @@ bool AnyFuseHi()
 	return false;
 }
 
-bool AnyFuseExt()
+bool any_fusebits_ext()
 {
 	int i;
 
@@ -201,7 +201,7 @@ bool AnyFuseExt()
 	return false;
 }
 
-bool AnyFuse()
+bool any_fusebits()
 {
 	int i;
 

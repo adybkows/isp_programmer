@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 
-int ISPReadUserSign_MakeRequest(uint32_t address, void *buf);
-uint8_t ISPReadUserSign(uint32_t address);
-void ISPWriteUserSign(uint32_t address, uint8_t value);
+int isp_read_user_signature_make_request(uint32_t address, void *buf);
+uint8_t isp_read_user_signature(uint32_t address);
+void isp_write_user_signature(uint32_t address, uint8_t value);
 
 #endif // ISP_USERSIGN_H

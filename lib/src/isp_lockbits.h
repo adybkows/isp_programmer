@@ -4,8 +4,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-int ISPReadLockBits(uint8_t *lb);
-int ISPWriteLockBits(uint8_t lb);
-bool AnyLock(void);
+int isp_read_lockbits(uint8_t *lb);
+int isp_write_lockbits(uint8_t lb);
+bool any_lockbits(void);
 
 #endif // ISP_LOCKBITS_H

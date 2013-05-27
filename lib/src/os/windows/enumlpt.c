@@ -15,7 +15,7 @@
 // GUID_DEVINTERFACE_SERENUM_BUS_ENUMERATOR
 static const GUID lptcom = { 0x4D36E978, 0xE325, 0x11CE, { 0xbf, 0xc1, 0x08, 0x00, 0x2b, 0xe1, 0x03, 0x18 } };
 
-static bool GetLPTAddr(DEVINST dev, uint16_t *baseaddr)
+static bool get_lpt_addr(DEVINST dev, uint16_t *baseaddr)
 {
 	LOG_CONF conf;
 	DWORD res = CM_Get_First_Log_Conf(&conf, dev, ALLOC_LOG_CONF);
@@ -41,7 +41,7 @@ static bool GetLPTAddr(DEVINST dev, uint16_t *baseaddr)
 	return true;
 }
 
-int EnumLPT(TLPTinfo *lpttab, int maxports)
+int enum_lpt(TLPTinfo *lpttab, int maxports)
 {
 	HDEVINFO h = SetupDiGetClassDevs(&lptcom, NULL, 0, DIGCF_PRESENT | DIGCF_PROFILE);
 	if (h == INVALID_HANDLE_VALUE)
@@ -67,7 +67,7 @@ int EnumLPT(TLPTinfo *lpttab, int maxports)
 						int lptnum = atoi(p1 + 4);
 						if ((lptnum >= 1) && (lptnum <= 255)) {
 							lpttab->num = lptnum;
-							if (GetLPTAddr(devinfo_data.DevInst, &lpttab->baseaddr)) {
+							if (get_lpt_addr(devinfo_data.DevInst, &lpttab->baseaddr)) {
 								lpttab++;
 								lptcnt++;
 							}

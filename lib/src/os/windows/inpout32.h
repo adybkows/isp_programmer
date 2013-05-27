@@ -5,10 +5,10 @@
 #include <stdint.h>
 
 // Driver initialization
-bool InpOut32Init(void);
+bool inpout32_init(void);
 
 // Driver shutdown
-void InpOut32Shutdown(void);
+void inpout32_shutdown(void);
 
 // Write data
 void Out32(uint16_t port_address, uint8_t data);

@@ -23,7 +23,7 @@ static lpIsXP64Bit gfpIsXP64Bit = NULL;
 static HINSTANCE hInpOutDll = NULL;
 
 // Driver initialization
-bool InpOut32Init(void)
+bool inpout32_init(void)
 {
 	if (hInpOutDll != NULL)
 		return true;
@@ -52,7 +52,7 @@ bool InpOut32Init(void)
 }
 
 // Driver shutdown
-void InpOut32Shutdown(void)
+void inpout32_shutdown(void)
 {
 	if (hInpOutDll != NULL) {
 		FreeLibrary(hInpOutDll);

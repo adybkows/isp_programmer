@@ -5,15 +5,15 @@
 #include <stdint.h>
 
 // Read data
-uint8_t InPort(uint16_t adr);
+uint8_t in_port(uint16_t adr);
 
 // Write data
-void OutPort(uint16_t adr, uint8_t y);
+void out_port(uint16_t adr, uint8_t y);
 
 // Returns true if the I/O sybsystem was initialized successfully
-bool PortsIOInit(void);
+bool ports_io_init(void);
 
 // I/O subsystem shutdown
-void PortsIOShutdown(void);
+void ports_io_shutdown(void);
 
 #endif // PORTSIO_H

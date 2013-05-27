@@ -14,7 +14,7 @@
 #include "serialflash.h"
 #include "spi.h"
 
-void ISPEnable()
+void isp_enable()
 {
 	uint8_t data[4];
 
@@ -23,22 +23,22 @@ void ISPEnable()
 	data[2] = 0;
 	data[3] = 0;
 	if (proctype == PROC_TYPE_OLD51)
-		WriteReadBytes(data, data, 3);
+		write_read_bytes(data, data, 3);
 	else
-		WriteReadBytes(data, data, 4);
-	Sync();
-	WaitMS(30L);
+		write_read_bytes(data, data, 4);
+	spi_sync();
+	wait_ms(30L);
 }
 
-bool ISPPollReady()
+bool isp_poll_ready()
 {
 	uint8_t data[3] = { 0xf0, 0, 0 };
 
-	WriteBytes(data, 3);
-	return ((ReadByte() & 0x1) == 0);
+	write_bytes(data, 3);
+	return ((read_byte() & 0x1) == 0);
 }
 
-int ISPErase()
+int isp_erase()
 {
 	uint8_t data[4];
 	int res = 0;
@@ -50,75 +50,75 @@ int ISPErase()
 			data[1] = 0x80;
 			data[2] = 0;
 			data[3] = 0;
-			WriteBytes(data, 4);
-			Sync();
+			write_bytes(data, 4);
+			spi_sync();
 		} else if (Signatures[devicenr].algo_erase == ALGO_ERASE_TWICE) {
 			/* first chip erase */
 			data[0] = 0xac;
 			data[1] = 0x80;
 			data[2] = 0;
 			data[3] = 0;
-			WriteBytes(data, 4);
-			Sync();
-			WaitMS(Signatures[devicenr].prog_time);
+			write_bytes(data, 4);
+			spi_sync();
+			wait_ms(Signatures[devicenr].prog_time);
 			/* write $FF to address $00 in the flash */
 			data[0] = 0x40;
 			data[1] = 0;
 			data[2] = 0;
 			data[3] = 0xff;
-			WriteBytes(data, 4);
-			Sync();
-			WaitMS(Signatures[devicenr].prog_time);
+			write_bytes(data, 4);
+			spi_sync();
+			wait_ms(Signatures[devicenr].prog_time);
 			/* second chip erase */
 			data[0] = 0xac;
 			data[1] = 0x80;
 			data[2] = 0;
 			data[3] = 0;
-			WriteBytes(data, 4);
-			Sync();
-			WaitMS(Signatures[devicenr].prog_time);
+			write_bytes(data, 4);
+			spi_sync();
+			wait_ms(Signatures[devicenr].prog_time);
 		}
 	} else if (proctype == PROC_TYPE_OLD51) {
 		data[0] = 0xac;
 		data[1] = 0x4;
 		data[2] = 0;
-		WriteBytes(data, 3);
-		Sync();
+		write_bytes(data, 3);
+		spi_sync();
 	} else if (proctype == PROC_TYPE_DATAFLASH) {
 		if (Signatures[devicenr].algo == ALGO_SERIALFLASH) {
-			return (SerialflashErase());
+			return (serialflash_erase());
 		}
-		DataflashErase();
+		dataflash_erase();
 		return res;
 	} else if (proctype == PROC_TYPE_SERIALFLASH) {
-		return (SerialflashErase());
+		return (serialflash_erase());
 	}
 
 	if (proctype == PROC_TYPE_NEW51) {
-		WaitMS(500L);
+		wait_ms(500L);
 	} else {
-		WaitMS(32);
+		wait_ms(32);
 	}
 
-	StrobeOff();
-	RstOff();
-	WaitMS(100L);
+	strobe_off();
+	reset_off();
+	wait_ms(100L);
 
 	return 0;
 }
 
-void ISPReadSign(void *s)
+void isp_read_signature(void *s)
 {
 	uint8_t address, b, *ptr;
 	uint8_t data[3];
 
 	ptr = (uint8_t *) s;
 	if (proctype == PROC_TYPE_DATAFLASH) {
-		DataflashReadSign(s);
+		dataflash_read_signature(s);
 		return;
 	}
 	if (proctype == PROC_TYPE_SERIALFLASH) {
-		SerialflashReadSign(s);
+		serialflash_read_signature(s);
 		return;
 	}
 	for (address = 0; address <= 2; address++) {
@@ -128,36 +128,36 @@ void ISPReadSign(void *s)
 			data[0] = 0x30;
 			data[1] = 0;
 			data[2] = address;
-			WriteBytes(data, 3);
-			b = ReadByte();
+			write_bytes(data, 3);
+			b = read_byte();
 		} else if (proctype == PROC_TYPE_S8253) {
 			/* AT89S8253 */
 			data[0] = 0x28;
 			data[1] = 0;
 			data[2] = address + 0x30;
-			WriteBytes(data, 3);
-			b = ReadByte();
+			write_bytes(data, 3);
+			b = read_byte();
 		} else if (proctype == PROC_TYPE_S2051) {
 			/* AT89S2051 / AT89S4051 */
 			data[0] = 0x28;
 			data[1] = 0;
 			data[2] = address;
-			WriteBytes(data, 3);
-			b = ReadByte();
+			write_bytes(data, 3);
+			b = read_byte();
 		} else if (proctype == PROC_TYPE_NEW51) {
 			/* AT89S51/52 */
 			data[0] = 0x28;
 			data[1] = address;
 			data[2] = 0;
-			WriteBytes(data, 3);
-			b = ReadByte();
+			write_bytes(data, 3);
+			b = read_byte();
 		}
 		*ptr = b;
 		ptr++;
 	}
 }
 
-void ISPReadOscCalBytes(uint8_t *b0, uint8_t *b1, uint8_t *b2, uint8_t *b3)
+void isp_read_osc_cal_bytes(uint8_t *b0, uint8_t *b1, uint8_t *b2, uint8_t *b3)
 {
 	uint8_t data[3];
 
@@ -170,36 +170,36 @@ void ISPReadOscCalBytes(uint8_t *b0, uint8_t *b1, uint8_t *b2, uint8_t *b3)
 		data[0] = 0x38;
 		data[1] = 0;
 		data[2] = 0;
-		WriteBytes(data, 3);
-		*b0 = ReadByte();
+		write_bytes(data, 3);
+		*b0 = read_byte();
 	}
 
 	if (Signatures[devicenr].osccal > 1) {
 		data[0] = 0x38;
 		data[1] = 0;
 		data[2] = 0x1;
-		WriteBytes(data, 3);
-		*b1 = ReadByte();
+		write_bytes(data, 3);
+		*b1 = read_byte();
 	}
 
 	if (Signatures[devicenr].osccal > 2) {
 		data[0] = 0x38;
 		data[1] = 0;
 		data[2] = 0x2;
-		WriteBytes(data, 3);
-		*b2 = ReadByte();
+		write_bytes(data, 3);
+		*b2 = read_byte();
 	}
 
 	if (Signatures[devicenr].osccal > 3) {
 		data[0] = 0x38;
 		data[1] = 0;
 		data[2] = 0x3;
-		WriteBytes(data, 3);
-		*b3 = ReadByte();
+		write_bytes(data, 3);
+		*b3 = read_byte();
 	}
 }
 
-void ISPReadMemoryBlock(int memtype, uint32_t address, void *buf, uint32_t len)
+void isp_read_memory_block(int memtype, uint32_t address, void *buf, uint32_t len)
 {
 	uint8_t data[4097];
 	uint8_t *ptr, *bbuf;
@@ -218,17 +218,17 @@ void ISPReadMemoryBlock(int memtype, uint32_t address, void *buf, uint32_t len)
 		l = 0;
 		for (i = 1; i <= cnt; i++) {
 			if (memtype == BUF_FLASH)
-				n = ISPReadFlash_MakeRequest(address, ptr);
+				n = isp_read_flash_make_request(address, ptr);
 			else if (memtype == BUF_EEPROM)
-				n = ISPReadEEPROM_MakeRequest(address, ptr);
+				n = isp_read_eeprom_make_request(address, ptr);
 			else if (memtype == BUF_USERSIG)
-				n = ISPReadUserSign_MakeRequest(address, ptr);
+				n = isp_read_user_signature_make_request(address, ptr);
 			address++;
 			ptr += n;
 			l += n;
 		}
 		/* execute the request */
-		WriteReadBytes(data, data, l);
+		write_read_bytes(data, data, l);
 		/* copy received data to the buffer */
 		for (i = 1; i <= cnt; i++) {
 			ptr = bbuf;

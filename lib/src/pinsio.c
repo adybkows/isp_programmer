@@ -3,301 +3,301 @@
 
 static uint8_t last_data, last_control;
 
-static void SetDataBit(uint8_t nr)
+static void set_data_bit(uint8_t nr)
 {
 	last_data |= (1 << nr);
-	OutPort(BASE, last_data);
+	out_port(BASE, last_data);
 }
 
-static void ClearDataBit(uint8_t nr)
+static void clear_data_bit(uint8_t nr)
 {
 	last_data &= ~(1 << nr);
-	OutPort(BASE, last_data);
+	out_port(BASE, last_data);
 }
 
-static bool GetDataBit(uint8_t nr)
+static bool get_data_bit(uint8_t nr)
 {
 	return ((last_data & (1 << nr)) != 0);
 }
 
-static void SetControlBit(uint8_t nr)
+static void set_control_bit(uint8_t nr)
 {
 	last_control |= (1 << nr);
-	OutPort(BASE + ControlPort, last_control);
+	out_port(BASE + ControlPort, last_control);
 }
 
-static void ClearControlBit(uint8_t nr)
+static void clear_control_bit(uint8_t nr)
 {
 	last_control &= ~(1 << nr);
-	OutPort(BASE + ControlPort, last_control);
+	out_port(BASE + ControlPort, last_control);
 }
 
-static bool GetControlBit(uint8_t nr)
+static bool get_control_bit(uint8_t nr)
 {
 	return ((last_control & (1 << nr)) != 0);
 }
 
-static bool GetStatusBit(uint8_t nr)
+static bool get_status_bit(uint8_t nr)
 {
-	return ((InPort(BASE + StatusPort) & (1 << nr)) != 0);
+	return ((in_port(BASE + StatusPort) & (1 << nr)) != 0);
 }
 
-static void SetLPTBit(uint8_t nr)
+static void set_lpt_bit(uint8_t nr)
 {
 	switch (nr) {
 		case LPT_OUT_STROBE: /* inverted */
-			ClearControlBit(0);
+			clear_control_bit(0);
 			break;
 
 		case LPT_OUT_D0:
-			SetDataBit(0);
+			set_data_bit(0);
 			break;
 
 		case LPT_OUT_D1:
-			SetDataBit(1);
+			set_data_bit(1);
 			break;
 
 		case LPT_OUT_D2:
-			SetDataBit(2);
+			set_data_bit(2);
 			break;
 
 		case LPT_OUT_D3:
-			SetDataBit(3);
+			set_data_bit(3);
 			break;
 
 		case LPT_OUT_D4:
-			SetDataBit(4);
+			set_data_bit(4);
 			break;
 
 		case LPT_OUT_D5:
-			SetDataBit(5);
+			set_data_bit(5);
 			break;
 
 		case LPT_OUT_D6:
-			SetDataBit(6);
+			set_data_bit(6);
 			break;
 
 		case LPT_OUT_D7:
-			SetDataBit(7);
+			set_data_bit(7);
 			break;
 
 		case LPT_OUT_AUTOLF: /* inverted */
-			ClearControlBit(1);
+			clear_control_bit(1);
 			break;
 
 		case LPT_OUT_INIT:
-			SetControlBit(2);
+			set_control_bit(2);
 			break;
 
 		case LPT_OUT_SELECTIN: /* inverted */
-			ClearControlBit(3);
+			clear_control_bit(3);
 			break;
 	}
 }
 
-static void ClearLPTBit(uint8_t nr)
+static void clear_lpt_bit(uint8_t nr)
 {
 	switch (nr) {
 		case LPT_OUT_STROBE: /* inverted */
-			SetControlBit(0);
+			set_control_bit(0);
 			break;
 
 		case LPT_OUT_D0:
-			ClearDataBit(0);
+			clear_data_bit(0);
 			break;
 
 		case LPT_OUT_D1:
-			ClearDataBit(1);
+			clear_data_bit(1);
 			break;
 
 		case LPT_OUT_D2:
-			ClearDataBit(2);
+			clear_data_bit(2);
 			break;
 
 		case LPT_OUT_D3:
-			ClearDataBit(3);
+			clear_data_bit(3);
 			break;
 
 		case LPT_OUT_D4:
-			ClearDataBit(4);
+			clear_data_bit(4);
 			break;
 
 		case LPT_OUT_D5:
-			ClearDataBit(5);
+			clear_data_bit(5);
 			break;
 
 		case LPT_OUT_D6:
-			ClearDataBit(6);
+			clear_data_bit(6);
 			break;
 
 		case LPT_OUT_D7:
-			ClearDataBit(7);
+			clear_data_bit(7);
 			break;
 
 		case LPT_OUT_AUTOLF: /* inverted */
-			SetControlBit(1);
+			set_control_bit(1);
 			break;
 
 		case LPT_OUT_INIT:
-			ClearControlBit(2);
+			clear_control_bit(2);
 			break;
 
 		case LPT_OUT_SELECTIN: /* inverted */
-			SetControlBit(3);
+			set_control_bit(3);
 			break;
 	}
 }
 
-static bool GetLPTBit(uint8_t nr)
+static bool get_lpt_bit(uint8_t nr)
 {
 	switch (nr) {
 		case LPT_IN_ACK:
-			return GetStatusBit(6);
+			return get_status_bit(6);
 
 		case LPT_IN_BUSY: /* inverted */
-			return !GetStatusBit(7);
+			return !get_status_bit(7);
 
 		case LPT_IN_PAPEREND:
-			return GetStatusBit(5);
+			return get_status_bit(5);
 
 		case LPT_IN_SELECT:
-			return GetStatusBit(4);
+			return get_status_bit(4);
 
 		case LPT_IN_ERROR:
-			return GetStatusBit(3);
+			return get_status_bit(3);
 
 		default:
 			return false;
 	}
 }
 
-void RstOn()
+void reset_on()
 {
 	bool v;
 
 	v = (proctype == PROC_TYPE_AVR) ^ (!pinout.resetinv);
 	if (v)
-		SetLPTBit(pinout.reset);
+		set_lpt_bit(pinout.reset);
 	else
-		ClearLPTBit(pinout.reset);
+		clear_lpt_bit(pinout.reset);
 }
 
-void RstOff()
+void reset_off()
 {
 	bool v;
 
 	v = (proctype == PROC_TYPE_AVR) ^ pinout.resetinv;
 	if (v)
-		SetLPTBit(pinout.reset);
+		set_lpt_bit(pinout.reset);
 	else
-		ClearLPTBit(pinout.reset);
+		clear_lpt_bit(pinout.reset);
 }
 
-void StrobeOn()
+void strobe_on()
 {
-	ClearLPTBit(pinout.strobe1);
-	ClearLPTBit(pinout.strobe2);
+	clear_lpt_bit(pinout.strobe1);
+	clear_lpt_bit(pinout.strobe2);
 }
 
-void StrobeOff()
+void strobe_off()
 {
-	SetLPTBit(pinout.strobe1);
-	SetLPTBit(pinout.strobe2);
+	set_lpt_bit(pinout.strobe1);
+	set_lpt_bit(pinout.strobe2);
 }
 
-void ChipselectOn()
+void chipselect_on()
 {
-	ClearLPTBit(pinout.reset);
+	clear_lpt_bit(pinout.reset);
 }
 
-void ChipselectOff()
+void chipselect_off()
 {
-	SetLPTBit(pinout.reset);
+	set_lpt_bit(pinout.reset);
 }
 
-bool ReadRst()
+bool read_reset()
 {
 	switch (pinout.reset) {
 		case LPT_OUT_STROBE: /* inverted */
-			return !GetControlBit(0);
+			return !get_control_bit(0);
 
 		case LPT_OUT_D0:
-			return GetDataBit(0);
+			return get_data_bit(0);
 
 		case LPT_OUT_D1:
-			return GetDataBit(1);
+			return get_data_bit(1);
 
 		case LPT_OUT_D2:
-			return GetDataBit(2);
+			return get_data_bit(2);
 
 		case LPT_OUT_D3:
-			return GetDataBit(3);
+			return get_data_bit(3);
 
 		case LPT_OUT_D4:
-			return GetDataBit(4);
+			return get_data_bit(4);
 
 		case LPT_OUT_D5:
-			return GetDataBit(5);
+			return get_data_bit(5);
 
 		case LPT_OUT_D6:
-			return GetDataBit(6);
+			return get_data_bit(6);
 
 		case LPT_OUT_D7:
-			return GetDataBit(7);
+			return get_data_bit(7);
 
 		case LPT_OUT_AUTOLF: /* inverted */
-			return !GetControlBit(1);
+			return !get_control_bit(1);
 
 		case LPT_OUT_INIT:
-			return GetControlBit(2);
+			return get_control_bit(2);
 
 		case LPT_OUT_SELECTIN: /* inverted */
-			return !GetControlBit(3);
+			return !get_control_bit(3);
 
 		default:
 			return false;
 	}
 }
 
-void ClkLo()
+void clk_lo()
 {
-	ClearLPTBit(pinout.sck);
+	clear_lpt_bit(pinout.sck);
 }
 
-void ClkHi()
+void clk_hi()
 {
-	SetLPTBit(pinout.sck);
+	set_lpt_bit(pinout.sck);
 }
 
-void Send0()
+void send_0()
 {
-	ClearLPTBit(pinout.mosi);
+	clear_lpt_bit(pinout.mosi);
 }
 
-void Send1()
+void send_1()
 {
-	SetLPTBit(pinout.mosi);
+	set_lpt_bit(pinout.mosi);
 }
 
-void LedOn()
+void led_on()
 {
-	ClearLPTBit(pinout.led);
+	clear_lpt_bit(pinout.led);
 }
 
-void LedOff()
+void led_off()
 {
-	SetLPTBit(pinout.led);
+	set_lpt_bit(pinout.led);
 }
 
-bool ReadBit()
+bool read_bit()
 {
-  return GetLPTBit(pinout.miso);
+  return get_lpt_bit(pinout.miso);
 }
 
-void PinoutChanged()
+void pinout_changed()
 {
-	last_data = InPort(BASE);
-	last_control = InPort(BASE + ControlPort);
+	last_data = in_port(BASE);
+	last_control = in_port(BASE + ControlPort);
 }
 
 // end of file

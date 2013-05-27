@@ -72,7 +72,7 @@ typedef struct {
 extern TSignature Signatures[];
 extern const int SIGNCOUNT;
 
-int FindSignature(uint8_t s0, uint8_t s1, uint8_t s2);
-int FindName(const char *name);
+int proc_find_signature(uint8_t s0, uint8_t s1, uint8_t s2);
+int proc_find_name(const char *name);
 
 #endif // PROCESSORS_H

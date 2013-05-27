@@ -10,7 +10,7 @@
 #include "serialflash.h"
 #include "spi.h"
 
-void WaitForReadyFlash(uint32_t address, uint8_t value)
+void wait_ready_flash(uint32_t address, uint8_t value)
 {
 	int64_t t1;
 	uint8_t b;
@@ -18,31 +18,31 @@ void WaitForReadyFlash(uint32_t address, uint8_t value)
 	switch (Signatures[devicenr].algo_busy) {
 
 		case ALGO_BUSY_WAIT:
-			WaitMS(Signatures[devicenr].prog_time);
+			wait_ms(Signatures[devicenr].prog_time);
 			break;
 
 		case ALGO_BUSY_POLL_00FF:
 		case ALGO_BUSY_POLL_FF:
 		case ALGO_BUSY_POLL_NMSB:
 			if (value != 0xff) {
-				WaitMS(1);
-				Tic(&t1);
+				wait_ms(1);
+				tic(&t1);
 				do {
-					b = ISPReadFlash(address);
-				} while (!((b == value) | (TocMS(t1) > 100)));
+					b = isp_read_flash(address);
+				} while (!((b == value) | (toc_ms(t1) > 100)));
 			} else
-				WaitMS(Signatures[devicenr].prog_time);
+				wait_ms(Signatures[devicenr].prog_time);
 			break;
 
 		case ALGO_BUSY_POLL_RDYBSY:
-			Tic(&t1);
+			tic(&t1);
 			do {
-			} while (!(ISPPollReady() | (TocMS(t1) > 100)));
+			} while (!(isp_poll_ready() | (toc_ms(t1) > 100)));
 			break;
 	}
 }
 
-void ISPLoadExtendedAddress(uint32_t address)
+void isp_load_extended_address(uint32_t address)
 {
 	uint8_t data[4];
 
@@ -50,11 +50,11 @@ void ISPLoadExtendedAddress(uint32_t address)
 	data[1] = 0;
 	data[2] = (address >> 17) & 0xff;
 	data[3] = 0;
-	WriteBytes(data, 4);
-	Sync();
+	write_bytes(data, 4);
+	spi_sync();
 }
 
-int ISPReadFlash_MakeRequest(uint32_t address, void *buf)
+int isp_read_flash_make_request(uint32_t address, void *buf)
 {
 	uint8_t *data = (uint8_t *) buf;
 	int res;
@@ -82,20 +82,20 @@ int ISPReadFlash_MakeRequest(uint32_t address, void *buf)
 	return res;
 }
 
-uint8_t ISPReadFlash(uint32_t address)
+uint8_t isp_read_flash(uint32_t address)
 {
 	uint8_t data[4];
 	int len;
 
-	len = ISPReadFlash_MakeRequest(address, data);
+	len = isp_read_flash_make_request(address, data);
 	if (len > 0) {
-		WriteBytes(data, len - 1);
-		return ReadByte();
+		write_bytes(data, len - 1);
+		return read_byte();
 	}
 	return 0xff;
 }
 
-void ISPReadFlashPage(uint32_t address, void *buf)
+void isp_read_flash_page(uint32_t address, void *buf)
 {
 	uint32_t pagesize, pagemask;
 	uint8_t data[8];
@@ -106,33 +106,33 @@ void ISPReadFlashPage(uint32_t address, void *buf)
 		data[0] = 0x30;
 		data[1] = address >> 8;
 		if (proctype == PROC_TYPE_NEW51) {
-			WriteBytes(data, 2);
+			write_bytes(data, 2);
 		} else {
 			data[2] = (address & 0xff) & (pagemask ^ 0xff);
-			WriteBytes(data, 3);
+			write_bytes(data, 3);
 		}
-		ReadBytes(buf, pagesize);
+		read_bytes(buf, pagesize);
 		return;
 	}
 	if (proctype == PROC_TYPE_AVR) {
 		pagesize = Signatures[devicenr].fpagesize;
-		ISPReadMemoryBlock(BUF_FLASH, address, buf, pagesize);
+		isp_read_memory_block(BUF_FLASH, address, buf, pagesize);
 		return;
 	}
 	if (proctype != PROC_TYPE_DATAFLASH) {
 		if (proctype == PROC_TYPE_SERIALFLASH) {
-			SerialflashReadFlashPage(address, buf);
+			serialflash_read_flash_page(address, buf);
 		}
 		return;
 	}
 	if (Signatures[devicenr].algo == ALGO_SERIALFLASH) {
-		SerialflashReadFlashPage(address, buf);
+		serialflash_read_flash_page(address, buf);
 	} else {
-		DataflashReadFlashPage(address, buf);
+		dataflash_read_flash_page(address, buf);
 	}
 }
 
-void ISPWriteFlash(uint32_t address, uint8_t value)
+void isp_write_flash(uint32_t address, uint8_t value)
 {
 	uint8_t data[4];
 
@@ -142,10 +142,10 @@ void ISPWriteFlash(uint32_t address, uint8_t value)
 		data[1] = (address / 2) >> 8;
 		data[2] = (address / 2) & 0xff;
 		data[3] = value;
-		WriteBytes(data, 4);
-		Sync();
+		write_bytes(data, 4);
+		spi_sync();
 		if (Signatures[devicenr].algo == ALGO_STD) {
-			WaitForReadyFlash(address, value);
+			wait_ready_flash(address, value);
 		}
 		return;
 	}
@@ -155,21 +155,21 @@ void ISPWriteFlash(uint32_t address, uint8_t value)
 		data[1] = address >> 8;
 		data[2] = address & 0xff;
 		data[3] = value;
-		WriteBytes(data, 4);
-		Sync();
-		WaitForReadyFlash(address, value);
+		write_bytes(data, 4);
+		spi_sync();
+		wait_ready_flash(address, value);
 		return;
 	}
 	/* AT89S53 / AT89S8252 */
 	data[0] = ((address >> 5) & 0xf8) | ((address >> 11) & 0x4) | 0x2;
 	data[1] = address & 0xff;
 	data[2] = value;
-	WriteBytes(data, 3);
-	Sync();
-	WaitForReadyFlash(address, value);
+	write_bytes(data, 3);
+	spi_sync();
+	wait_ready_flash(address, value);
 }
 
-void ISPWriteFlashPage(uint32_t address, void *buf)
+void isp_write_flash_page(uint32_t address, void *buf)
 {
 	uint32_t pagesize, pagemask, raddr;
 	uint8_t data[4];
@@ -181,14 +181,14 @@ void ISPWriteFlashPage(uint32_t address, void *buf)
 		data[0] = 0x50;
 		data[1] = address >> 8;
 		if (proctype == PROC_TYPE_NEW51) {
-			WriteBytes(data, 2);
+			write_bytes(data, 2);
 		} else {
 			data[2] = (address & 0xff) & (pagemask ^ 0xff);
-			WriteBytes(data, 3);
+			write_bytes(data, 3);
 		}
-		WriteBytes(buf, pagesize);
-		Sync();
-		WaitMS(Signatures[devicenr].prog_time);
+		write_bytes(buf, pagesize);
+		spi_sync();
+		wait_ms(Signatures[devicenr].prog_time);
 		return;
 	}
 	if (proctype == PROC_TYPE_AVR) {
@@ -200,7 +200,7 @@ void ISPWriteFlashPage(uint32_t address, void *buf)
 			data[1] = (raddr / 2) >> 8;
 			data[2] = (raddr / 2) & 0xff;
 			data[3] = *ptr;
-			WriteBytes(data, 4);
+			write_bytes(data, 4);
 			ptr++;
 		}
 		/* Write Program Memory Page */
@@ -208,26 +208,26 @@ void ISPWriteFlashPage(uint32_t address, void *buf)
 		data[1] = (address / 2) >> 8;
 		data[2] = (address / 2) & 0xff;
 		data[3] = 0;
-		WriteBytes(data, 4);
-		Sync();
+		write_bytes(data, 4);
+		spi_sync();
 		ptr = (uint8_t *) buf;
-		WaitForReadyFlash(address, *ptr);
+		wait_ready_flash(address, *ptr);
 		return;
 	}
 	if (proctype != PROC_TYPE_DATAFLASH) {
 		if (proctype == PROC_TYPE_SERIALFLASH) {
-			SerialflashWriteFlashPage(address, buf);
+			serialflash_write_flash_page(address, buf);
 		}
 		return;
 	}
 	if (Signatures[devicenr].algo == ALGO_SERIALFLASH) {
-		SerialflashWriteFlashPage(address, buf);
+		serialflash_write_flash_page(address, buf);
 	} else {
-		DataflashWriteFlashPage(address, buf);
+		dataflash_write_flash_page(address, buf);
 	}
 }
 
-void ISPWriteProgramPage(uint32_t address, uint8_t value)
+void isp_write_program_page(uint32_t address, uint8_t value)
 {
 	uint8_t data[4];
 
@@ -235,9 +235,9 @@ void ISPWriteProgramPage(uint32_t address, uint8_t value)
 	data[1] = (address / 2) >> 8;
 	data[2] = (address / 2) & 0xff;
 	data[3] = 0;
-	WriteBytes(data, 4);
-	Sync();
-	WaitForReadyFlash(address, value);
+	write_bytes(data, 4);
+	spi_sync();
+	wait_ready_flash(address, value);
 }
 
 // end of file

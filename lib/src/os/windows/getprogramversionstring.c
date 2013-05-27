@@ -3,7 +3,7 @@
 #include <string.h>
 #include <windows.h>
 
-char *GetProgramVersionString(char *buffer, int buffersize)
+char *get_program_version_string(char *buffer, int buffersize)
 {
 	char filename[MAX_PATH];
 	DWORD zero;
